@@ -18,17 +18,26 @@
   .header h1 span { color: #ff6b81; }
   .header .sub { font-size: 13px; color: #86868b; margin-top: 4px; }
   .header .line { width: 40px; height: 3px; background: #ff6b81; border-radius: 2px; margin-top: 16px; }
-  .note { display: none; }
-  .prompt {
+  .note {
     background: #fff;
     border: 1px solid #e8e8ed;
     border-radius: 12px;
     padding: 24px;
-    text-align: center;
+    margin-bottom: 16px;
+    position: relative;
   }
-  .prompt .icon { font-size: 48px; margin-bottom: 12px; }
-  .prompt h2 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
-  .prompt p { font-size: 14px; color: #86868b; }
+  .note .date {
+    font-size: 11px;
+    color: #b0b0b0;
+    margin-bottom: 10px;
+  }
+  .note .date::before { content: '📅 '; }
+  .note .content {
+    font-size: 15px;
+    color: #1d1d1f;
+    line-height: 1.9;
+    white-space: pre-wrap;
+  }
 </style>
 </head>
 <body>
@@ -38,10 +47,9 @@
     <div class="sub">记录日常生活中的灵光一闪</div>
     <div class="line"></div>
   </div>
-  <div class="prompt">
-    <div class="icon">✍️</div>
-    <h2>还没有随想</h2>
-    <p>用 <code>git push</code> 添加你的第一篇笔记</p>
+  <div class="note">
+    <div class="date">2026-05-16</div>
+    <div class="content">普通百姓通过劳作创造的财富，60%服务于基础需求，20%服务于精神需求，剩余20%用于日常应急，其中约10%可能用于存储。可见，大部分精力还是在服务于温饱，只有很小一部分投入到精神世界之中。</div>
   </div>
 </div>
 </body>

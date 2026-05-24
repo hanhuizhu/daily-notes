@@ -48,6 +48,62 @@
     line-height: 1.9;
     white-space: pre-wrap;
   }
+
+  /* 侧边栏导航 */
+  .sidebar {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 100;
+  }
+  .sidebar a {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #c0c0c5;
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    text-align: right;
+    line-height: 1.4;
+  }
+  .sidebar a:hover {
+    color: #ff6b81;
+    background: #fff0f0;
+  }
+  .sidebar a.active {
+    color: #ff6b81;
+    background: #fff0f0;
+  }
+  .sidebar .preview {
+    display: none;
+    position: absolute;
+    right: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    border: 1px solid #e8e8ed;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #1d1d1f;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    pointer-events: none;
+  }
+  .sidebar a:hover .preview {
+    display: block;
+  }
+
+  /* 移动端隐藏侧边栏 */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -107,5 +163,49 @@
     <div class="content">学生时代和工作时代能把事情做好，是因为有外部评分系统在，加上优绩驱动，所以行动力够强。但脱离这些场景后，同样的行动力难以复现。需要刻意借助外部力量来补位，比如对某人做出承诺、设置金钱奖惩等，用新的外部约束来驱动自己。</div>
   </div>
 </div>
+
+<div class="sidebar" id="sidebar"></div>
+
+<script>
+;(function() {
+  const notes = document.querySelectorAll('.note');
+  const sidebar = document.getElementById('sidebar');
+  const items = [];
+
+  notes.forEach((note, i) => {
+    const id = 'note-' + i;
+    note.id = id;
+
+    const indexEl = note.querySelector('.index');
+    const contentEl = note.querySelector('.content');
+    const label = indexEl.textContent.trim();
+    const preview = contentEl.textContent.trim().slice(0, 30);
+
+    const a = document.createElement('a');
+    a.href = '#' + id;
+    a.innerHTML = label + '<span class="preview">' + preview + '…</span>';
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      note.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    sidebar.appendChild(a);
+    items.push({ el: a, note: note });
+  });
+
+  // scroll-spy
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = Array.from(notes).indexOf(entry.target);
+        items.forEach((item, i) => {
+          item.el.classList.toggle('active', i === idx);
+        });
+      }
+    });
+  }, { rootMargin: '-100px 0px -60% 0px' });
+
+  notes.forEach(n => observer.observe(n));
+})();
+</script>
 </body>
 </html>

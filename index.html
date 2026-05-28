@@ -5,152 +5,472 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>随想笔记 · daily notes</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
-    background: #faf9f8;
-    color: #1d1d1f;
-    line-height: 1.8;
-  }
-  .container { max-width: 680px; margin: 0 auto; padding: 48px 24px; }
-  .header { margin-bottom: 40px; }
-  .header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
-  .header h1 span { color: #ff6b81; }
-  .header .sub { font-size: 13px; color: #86868b; margin-top: 4px; }
-  .header .line { width: 40px; height: 3px; background: #ff6b81; border-radius: 2px; margin-top: 16px; }
-  .note {
-    background: #fff;
-    border: 1px solid #e8e8ed;
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 16px;
-    position: relative;
-  }
-  .note .index {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    color: #ff6b81;
-    background: #fff0f0;
-    padding: 2px 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-  }
-  .note .date {
-    font-size: 11px;
-    color: #b0b0b0;
-    margin-bottom: 10px;
-  }
-  .note .date::before { content: '📅 '; }
-  .note .content {
-    font-size: 15px;
-    color: #1d1d1f;
-    line-height: 1.9;
-    white-space: pre-wrap;
-  }
+/* ============================================
+   Design System — Design Tokens
+   ============================================ */
+:root {
+  /* Colors */
+  --c-bg: #f5f0eb;
+  --c-bg-card: #fffcf8;
+  --c-text: #2d2a24;
+  --c-text-secondary: #8b8178;
+  --c-text-muted: #b0a79e;
+  --c-accent: #c8916a;
+  --c-accent-hover: #b88055;
+  --c-accent-subtle: #f0e6dc;
+  --c-accent-glow: rgba(200, 145, 106, 0.15);
+  --c-border: #e8e0d8;
+  --c-border-light: #f0ebe5;
+  --c-shadow: rgba(80, 60, 40, 0.06);
+  --c-shadow-hover: rgba(80, 60, 40, 0.12);
 
-  /* 侧边栏导航 */
+  /* Typography */
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", "STSong", Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 400ms;
+  --duration-slow: 600ms;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--c-bg);
+  color: var(--c-text);
+  line-height: 1.8;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(200, 145, 106, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 50%, rgba(200, 145, 106, 0.03) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* ============================================
+   Layout
+   ============================================ */
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: var(--space-3xl) var(--space-lg);
+  position: relative;
+}
+
+/* ============================================
+   WeChat Tip Banner
+   ============================================ */
+.wx-tip {
+  display: none;
+  background: linear-gradient(135deg, #fef8e0, #fdf0d0);
+  border: 1px solid #f0dba8;
+  border-radius: var(--radius-md);
+  padding: 12px 20px;
+  margin-bottom: var(--space-lg);
+  font-size: 13px;
+  color: #8d6e00;
+  text-align: center;
+}
+.wx-tip strong { color: #b85a00; }
+
+/* ============================================
+   Header — Journal Masthead
+   ============================================ */
+.header {
+  margin-bottom: var(--space-2xl);
+  position: relative;
+}
+
+.header h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--c-text);
+  line-height: 1.3;
+}
+
+.header h1 .accent {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--c-accent), #d4a37a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header .sub {
+  font-size: clamp(0.8125rem, 1.5vw, 0.9375rem);
+  color: var(--c-text-secondary);
+  margin-top: var(--space-sm);
+  line-height: 1.5;
+}
+
+.header .line {
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--c-accent), transparent);
+  border-radius: 2px;
+  margin-top: var(--space-lg);
+}
+
+/* ============================================
+   Note Card — Journal Entry
+   ============================================ */
+.note {
+  background: var(--c-bg-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-lg);
+  margin-bottom: var(--space-md);
+  position: relative;
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
+  box-shadow:
+    0 1px 3px var(--c-shadow),
+    0 1px 2px rgba(80, 60, 40, 0.04);
+}
+
+.note::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, transparent 60%, rgba(200, 145, 106, 0.02));
+  pointer-events: none;
+}
+
+.note:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 12px var(--c-shadow-hover),
+    0 2px 4px rgba(80, 60, 40, 0.06);
+  border-color: var(--c-accent-subtle);
+}
+
+.note:focus-within {
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 3px var(--c-accent-glow);
+}
+
+/* Entry Meta — Index + Date */
+.note-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.note .index {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--c-accent);
+  background: var(--c-accent-subtle);
+  padding: 2px 10px;
+  border-radius: 10px;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
+
+.note .date {
+  font-size: 12px;
+  color: var(--c-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.note .date::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  background: var(--c-text-muted);
+  border-radius: 50%;
+  margin-right: 2px;
+}
+
+/* Entry Content */
+.note .content {
+  font-size: clamp(0.9375rem, 1.8vw, 1.0625rem);
+  color: var(--c-text);
+  line-height: 1.9;
+  white-space: pre-wrap;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   Sidebar Navigation — Bookmark Ribbon
+   ============================================ */
+.sidebar {
+  position: fixed;
+  left: max(calc((100vw - 680px) / 2 - 140px), 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 100;
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.sidebar::-webkit-scrollbar { display: none; }
+
+.sidebar a {
+  position: relative;
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--c-text-muted);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-fast) var(--ease-out);
+  text-align: right;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+.sidebar a:hover {
+  color: var(--c-accent);
+  background: var(--c-accent-glow);
+}
+
+.sidebar a.active {
+  color: var(--c-accent);
+  background: var(--c-accent-glow);
+  font-weight: 600;
+}
+
+/* Active indicator dot */
+.sidebar a.active::before {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--c-accent);
+  border-radius: 50%;
+}
+
+/* Preview tooltip */
+.sidebar a .preview {
+  display: none;
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--c-bg-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--c-text-secondary);
+  white-space: nowrap;
+  box-shadow: 0 4px 12px var(--c-shadow-hover);
+  pointer-events: none;
+  line-height: 1.5;
+  backdrop-filter: blur(8px);
+}
+
+.sidebar a:hover .preview {
+  display: block;
+  animation: previewIn var(--duration-fast) var(--ease-out);
+}
+
+@keyframes previewIn {
+  from { opacity: 0; transform: translateY(-50%) translateX(4px); }
+  to { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+/* ============================================
+   Scroll Progress Indicator
+   ============================================ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--c-accent), #d4a37a);
+  z-index: 1000;
+  transition: width 50ms linear;
+}
+
+/* ============================================
+   Entry Entrance Animation
+   ============================================ */
+.note {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeInUp var(--duration-slow) var(--ease-out) forwards;
+}
+
+.note:nth-child(3) { animation-delay: 0.05s; }
+.note:nth-child(4) { animation-delay: 0.1s; }
+.note:nth-child(5) { animation-delay: 0.15s; }
+.note:nth-child(6) { animation-delay: 0.2s; }
+.note:nth-child(7) { animation-delay: 0.25s; }
+.note:nth-child(8) { animation-delay: 0.3s; }
+.note:nth-child(9) { animation-delay: 0.35s; }
+.note:nth-child(10) { animation-delay: 0.4s; }
+.note:nth-child(11) { animation-delay: 0.45s; }
+.note:nth-child(12) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .note { opacity: 1; transform: none; animation: none; }
+  .sidebar a .preview { animation: none; }
+  .note:hover { transform: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ============================================
+   Responsive — Mobile
+   ============================================ */
+@media (max-width: 960px) {
+  .sidebar { display: none; }
+  .container { padding: var(--space-xl) var(--space-md); }
+}
+
+@media (min-width: 961px) and (max-width: 1100px) {
   .sidebar {
-    position: fixed;
-    left: 24px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    z-index: 100;
+    left: max(12px, calc((100vw - 680px) / 2 - 110px));
   }
-  .sidebar a {
-    display: block;
-    font-size: 11px;
-    font-weight: 600;
-    color: #c0c0c5;
-    text-decoration: none;
-    padding: 4px 8px;
-    border-radius: 6px;
-    transition: all 0.2s;
-    text-align: right;
-    line-height: 1.4;
-  }
-  .sidebar a:hover {
-    color: #ff6b81;
-    background: #fff0f0;
-  }
-  .sidebar a.active {
-    color: #ff6b81;
-    background: #fff0f0;
-  }
-  .sidebar .preview {
-    display: none;
-    position: absolute;
-    left: calc(100% + 8px);
-    top: 50%;
-    transform: translateY(-50%);
-    background: #fff;
-    border: 1px solid #e8e8ed;
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 12px;
-    color: #1d1d1f;
-    white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    pointer-events: none;
-  }
-  .sidebar a:hover .preview {
-    display: block;
+  .sidebar a { padding: 4px 8px; font-size: 10px; }
+}
+
+/* ============================================
+   Dark Mode Support
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: #1a1817;
+    --c-bg-card: #242120;
+    --c-text: #e8e0d8;
+    --c-text-secondary: #a09890;
+    --c-text-muted: #706860;
+    --c-accent: #d4a37a;
+    --c-accent-hover: #e0b890;
+    --c-accent-subtle: #2d2825;
+    --c-accent-glow: rgba(212, 163, 122, 0.12);
+    --c-border: #2d2825;
+    --c-border-light: #2a2522;
+    --c-shadow: rgba(0, 0, 0, 0.2);
+    --c-shadow-hover: rgba(0, 0, 0, 0.4);
   }
 
-  /* 微信浏览提示 */
-  .wx-tip {
-    display: none;
-    background: #fff8e1;
-    border: 1px solid #ffe082;
-    border-radius: 8px;
-    padding: 10px 16px;
-    margin-bottom: 16px;
-    font-size: 13px;
-    color: #8d6e00;
-    text-align: center;
+  body {
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(212, 163, 122, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 50%, rgba(212, 163, 122, 0.04) 0%, transparent 50%);
   }
-  .wx-tip strong { color: #e65100; }
 
-  /* 移动端隐藏侧边栏 */
-  @media (max-width: 900px) {
-    .sidebar { display: none; }
+  .note::before {
+    background: linear-gradient(135deg, transparent 60%, rgba(212, 163, 122, 0.03));
   }
+}
 </style>
 </head>
 <body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
 <div class="container">
-  <div class="wx-tip" id="wxTip">⚠️ 微信内访问受限，请点击右上角 <strong>「···」→「访问原网页」</strong> 查看完整内容</div>
-  <div class="header">
-    <h1>📝 随想<span>笔记</span></h1>
-    <div class="sub">记录日常生活中的灵光一闪</div>
+
+  <div class="wx-tip" id="wxTip">
+    ⚠️ 微信内访问受限，请点击右上角 <strong>「···」→「访问原网页」</strong> 查看完整内容
+  </div>
+
+  <header class="header">
+    <h1>📝 随想<span class="accent">笔记</span></h1>
+    <p class="sub">记录日常生活中的灵光一闪</p>
     <div class="line"></div>
-  </div>
-  <div class="note">
-    <div class="index">#001</div>
-    <div class="date">2026-05-28</div>
+  </header>
+
+  <article class="note" id="note-0">
+    <div class="note-meta">
+      <span class="index">#001</span>
+      <span class="date">2026-05-28</span>
+    </div>
     <div class="content">找到技能的交叉地带，让能力产生复利。三个各自排在前10%的技能聚焦一处，乘积效应造就的是0.1%的稀缺竞争力。</div>
-  </div>
-  <div class="note">
-    <div class="index">#002</div>
-    <div class="date">2026-05-24</div>
+  </article>
+
+  <article class="note" id="note-1">
+    <div class="note-meta">
+      <span class="index">#002</span>
+      <span class="date">2026-05-24</span>
+    </div>
     <div class="content">任何事情不要怕，直接去做；所有事情都是自己争取出来的。</div>
-  </div>
-  <div class="note">
-    <div class="index">#003</div>
-    <div class="date">2026-05-24</div>
+  </article>
+
+  <article class="note" id="note-2">
+    <div class="note-meta">
+      <span class="index">#003</span>
+      <span class="date">2026-05-24</span>
+    </div>
     <div class="content">韧性高于一切，你可以笨拙但是不可以不抗压；只要能坚持，错1次错100次你总可以把事情做好；遇事永远抗住。</div>
-  </div>
-  <div class="note">
-    <div class="index">#004</div>
-    <div class="date">2026-05-24</div>
+  </article>
+
+  <article class="note" id="note-3">
+    <div class="note-meta">
+      <span class="index">#004</span>
+      <span class="date">2026-05-24</span>
+    </div>
     <div class="content">JUST DO it, 都TM是草台班子,直接做,做着做着就会了,不要等</div>
-  </div>
-  <div class="note">
-    <div class="index">#005</div>
-    <div class="date">2026-05-24</div>
+  </article>
+
+  <article class="note" id="note-4">
+    <div class="note-meta">
+      <span class="index">#005</span>
+      <span class="date">2026-05-24</span>
+    </div>
     <div class="content">我的个人优势：
 
 1. 资深前端，自认在行业前10%的水准，能打硬仗
@@ -161,68 +481,89 @@
 6. 历史认知水平高于普通用户，有更长的思考纵深
 7. 英语能读写，结合翻墙能力，信息获取链路完整
 8. 持有导游证，具备带团经验和沟通组织能力</div>
-  </div>
-  <div class="note">
-    <div class="index">#006</div>
-    <div class="date">2026-05-17</div>
+  </article>
+
+  <article class="note" id="note-5">
+    <div class="note-meta">
+      <span class="index">#006</span>
+      <span class="date">2026-05-17</span>
+    </div>
     <div class="content">房地产、IT、娱乐、主播——每个行当都有自己的风口期。普通人能不能上去就看能不能站在风口上。风口过去，好好准备找下一个风口。</div>
-  </div>
-  <div class="note">
-    <div class="index">#007</div>
-    <div class="date">2026-05-17</div>
+  </article>
+
+  <article class="note" id="note-6">
+    <div class="note-meta">
+      <span class="index">#007</span>
+      <span class="date">2026-05-17</span>
+    </div>
     <div class="content">一个商业闭环涉及到的要素非常多。AI带来的是部分节点效率的提升，可以覆盖1到多个节点。有些节点是AI能做的，有些节点是AI无法实现的。对超级个体来说，AI弥补了最后一块短板，实现了一人公司。AI能高效覆盖的：设计、研发、营销内容、客服。AI做不了的：真实需求洞察、信任建立、复杂决策。一人公司能跑通的关键不是AI替代了所有环节，而是AI把需要招5个人才干的事压缩到一个人能handle的范围。</div>
-  </div>
-  <div class="note">
-    <div class="index">#008</div>
-    <div class="date">2026-05-17</div>
+  </article>
+
+  <article class="note" id="note-7">
+    <div class="note-meta">
+      <span class="index">#008</span>
+      <span class="date">2026-05-17</span>
+    </div>
     <div class="content">目标需要聚焦，一个时段只能有一个目标：健康，或者其他。不然很糟糕。</div>
-  </div>
-  <div class="note">
-    <div class="index">#009</div>
-    <div class="date">2026-05-16</div>
+  </article>
+
+  <article class="note" id="note-8">
+    <div class="note-meta">
+      <span class="index">#009</span>
+      <span class="date">2026-05-16</span>
+    </div>
     <div class="content">一个人维持生存每天只需要2000大卡的能量，通过合理分配蛋白质、碳水等营养物质，大概只需要10块钱。也就是说每天花10块钱就不会饿死。但我们为什么会投入大把时间和精力在生产上，并为此感到极致的痛苦？</div>
-  </div>
-  <div class="note">
-    <div class="index">#010</div>
-    <div class="date">2026-05-16</div>
+  </article>
+
+  <article class="note" id="note-9">
+    <div class="note-meta">
+      <span class="index">#010</span>
+      <span class="date">2026-05-16</span>
+    </div>
     <div class="content">普通百姓通过劳作创造的财富，60%服务于基础需求，20%服务于精神需求，剩余20%用于日常应急，其中约10%可能用于存储。可见，大部分精力还是在服务于温饱，只有很小一部分投入到精神世界之中。</div>
-  </div>
-  <div class="note">
-    <div class="index">#011</div>
-    <div class="date">2026-05-24</div>
+  </article>
+
+  <article class="note" id="note-10">
+    <div class="note-meta">
+      <span class="index">#011</span>
+      <span class="date">2026-05-24</span>
+    </div>
     <div class="content">学生时代和工作时代能把事情做好，是因为有外部评分系统在，加上优绩驱动，所以行动力够强。但脱离这些场景后，同样的行动力难以复现。需要刻意借助外部力量来补位，比如对某人做出承诺、设置金钱奖惩等，用新的外部约束来驱动自己。</div>
-  </div>
+  </article>
+
 </div>
 
-<div class="sidebar" id="sidebar"></div>
+<nav class="sidebar" id="sidebar" aria-label="笔记导航"></nav>
 
 <script>
 ;(function() {
+  'use strict';
+
+  // ============================================
+  // Sidebar Navigation with Scroll Spy
+  // ============================================
   const notes = document.querySelectorAll('.note');
   const sidebar = document.getElementById('sidebar');
   const items = [];
 
   notes.forEach((note, i) => {
-    const id = 'note-' + i;
-    note.id = id;
-
     const indexEl = note.querySelector('.index');
     const contentEl = note.querySelector('.content');
     const label = indexEl.textContent.trim();
     const preview = contentEl.textContent.trim().slice(0, 30);
 
     const a = document.createElement('a');
-    a.href = '#' + id;
+    a.href = '#' + note.id;
     a.innerHTML = label + '<span class="preview">' + preview + '…</span>';
     a.addEventListener('click', (e) => {
       e.preventDefault();
       note.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
     sidebar.appendChild(a);
-    items.push({ el: a, note: note });
+    items.push({ el: a, note });
   });
 
-  // scroll-spy
+  // Scroll spy
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -232,15 +573,33 @@
         });
       }
     });
-  }, { rootMargin: '-100px 0px -60% 0px' });
+  }, { rootMargin: '-80px 0px -60% 0px' });
 
   notes.forEach(n => observer.observe(n));
-})();
 
-// 微信浏览器检测
-if (navigator.userAgent.includes('MicroMessenger')) {
-  document.getElementById('wxTip').style.display = 'block';
-}
+  // ============================================
+  // Scroll Progress Bar
+  // ============================================
+  const progressBar = document.getElementById('scrollProgress');
+
+  const updateProgress = () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = progress + '%';
+  };
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress, { passive: true });
+  updateProgress();
+
+  // ============================================
+  // WeChat Browser Detection
+  // ============================================
+  if (navigator.userAgent.includes('MicroMessenger')) {
+    document.getElementById('wxTip').style.display = 'block';
+  }
+})();
 </script>
 </body>
 </html>

@@ -318,20 +318,17 @@ AI工具：能用 Claude Code 等高效工作，工具链意识强
 
   const container = document.getElementById('notes-container');
   const sidebar = document.getElementById('sidebar');
-  const items = [];
   const notes = [];
 
+  // Phase 1: create notes
   NOTES_DATA.forEach((entry, i) => {
     const index = i + 1;
-    const id = 'note-' + i;
     const label = '#' + String(index).padStart(3, '0');
 
-    // --- create note ---
     const article = document.createElement('article');
     article.className = 'note';
-    article.id = id;
+    article.id = 'note-' + i;
     article.style.animationDelay = (i * 0.05) + 's';
-
     article.innerHTML =
       '<div class="note-meta">' +
       '<span class="index">' + label + '</span>' +
@@ -341,29 +338,52 @@ AI工具：能用 Claude Code 等高效工作，工具链意识强
 
     container.appendChild(article);
     notes.push(article);
-
-    // --- create sidebar link ---
-    const preview = entry.content.slice(0, 30);
-
-    const a = document.createElement('a');
-    a.href = '#' + id;
-    a.innerHTML = label + '<span class="preview">' + preview + '…</span>';
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      article.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-    sidebar.appendChild(a);
-    items.push({ el: a, note: article });
   });
 
-  // Scroll spy
+  // Phase 2: group by date, create sidebar links (one per unique date)
+  const dateGroups = new Map();
+  notes.forEach((note, i) => {
+    const date = NOTES_DATA[i].date;
+    if (!dateGroups.has(date)) dateGroups.set(date, []);
+    dateGroups.get(date).push(note);
+  });
+
+  const dateItems = [];
+  for (const [date, noteList] of dateGroups) {
+    const firstId = noteList[0].id;
+    const count = noteList.length;
+    const label = count > 1 ? date + ' · ' + count + '篇' : date;
+
+    const a = document.createElement('a');
+    a.href = '#' + firstId;
+    a.innerHTML = label;
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById(firstId).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    sidebar.appendChild(a);
+    dateItems.push({ el: a, noteEls: noteList });
+  }
+
+  // Map each note to its date group index
+  const noteToGroup = [];
+  dateItems.forEach((item, gIdx) => {
+    item.noteEls.forEach(() => noteToGroup.push(gIdx));
+  });
+
+  // Scroll spy (per date group)
   if (notes.length) {
+    let lastActive = -1;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const idx = notes.indexOf(entry.target);
-          if (idx !== -1) {
-            items.forEach((item, i) => item.el.classList.toggle('active', i === idx));
+          const noteIdx = notes.indexOf(entry.target);
+          if (noteIdx !== -1) {
+            const gIdx = noteToGroup[noteIdx];
+            if (gIdx !== lastActive) {
+              lastActive = gIdx;
+              dateItems.forEach((item, i) => item.el.classList.toggle('active', i === gIdx));
+            }
           }
         }
       });

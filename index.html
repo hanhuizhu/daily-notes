@@ -95,6 +95,12 @@ body {
 .sidebar a:hover { color:var(--c-accent); background:var(--c-accent-glow); }
 .sidebar a.active { color:var(--c-accent); background:var(--c-accent-glow); font-weight:600; }
 .sidebar a.active::before { content:''; position:absolute; right:-4px; top:50%; transform:translateY(-50%); width:4px; height:4px; background:var(--c-accent); border-radius:50%; }
+.sidebar .stats {
+  font-family:var(--font-mono); font-size:10px; color:var(--c-text-muted);
+  text-align:right; padding:4px 12px 8px; margin-bottom:4px;
+  border-bottom:1px solid var(--c-border-light); letter-spacing:0.03em;
+}
+.sidebar .stats strong { color:var(--c-accent); font-weight:600; }
 .sidebar a .preview {
   display:none; position:absolute; right:calc(100% + 12px); top:50%; transform:translateY(-50%);
   background:var(--c-bg-card); border:1px solid var(--c-border); border-radius:var(--radius-sm);
@@ -353,6 +359,12 @@ AI工具：能用 Claude Code 等高效工作，工具链意识强
   const container = document.getElementById('notes-container');
   const sidebar = document.getElementById('sidebar');
   const notes = [];
+
+  // Stats
+  const statsEl = document.createElement('div');
+  statsEl.className = 'stats';
+  statsEl.innerHTML = '共 <strong>' + NOTES_DATA.length + '</strong> 篇';
+  sidebar.appendChild(statsEl);
 
   // Phase 1: create notes
   NOTES_DATA.forEach((entry, i) => {

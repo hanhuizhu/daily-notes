@@ -79,7 +79,35 @@ body {
 }
 .note .date { font-size:12px; color:var(--c-text-muted); display:flex; align-items:center; gap:4px; }
 .note .date::before { content:''; display:inline-block; width:3px; height:3px; background:var(--c-text-muted); border-radius:50%; margin-right:2px; }
-.note .content { font-size:clamp(0.9375rem,1.8vw,1.0625rem); color:var(--c-text); line-height:1.9; white-space:pre-wrap; position:relative; z-index:1; }
+.note .content {
+  font-size:clamp(0.9375rem,1.8vw,1.0625rem); color:var(--c-text); line-height:1.9; white-space:pre-wrap; position:relative; z-index:1;
+  overflow:hidden; transition:max-height var(--duration-normal) var(--ease-out), opacity var(--duration-normal) var(--ease-out);
+}
+.note .content.collapsed {
+  max-height:3.8em !important; opacity:0.5;
+}
+.note.is-collapsed .content { max-height:3.8em !important; opacity:0.5; }
+
+/* Expand/collapse toggle */
+.note-toggle {
+  margin-left:auto; cursor:pointer; user-select:none; display:flex; align-items:center; gap:4px;
+  font-size:11px; font-weight:500; color:var(--c-text-muted); padding:2px 8px; border-radius:8px;
+  transition:all var(--duration-fast) var(--ease-out); background:transparent; border:none; font-family:var(--font-sans);
+  line-height:1.6;
+}
+.note-toggle:hover { color:var(--c-accent); background:var(--c-accent-glow); }
+.note-toggle .icon { display:inline-block; transition:transform var(--duration-fast) var(--ease-out); font-size:10px; }
+.note.is-collapsed .note-toggle .icon { transform:rotate(-90deg); }
+
+/* Global toggle */
+.global-toggle-wrap { display:flex; justify-content:flex-end; margin-bottom:var(--space-md); }
+.global-toggle {
+  cursor:pointer; user-select:none; display:inline-flex; align-items:center; gap:6px;
+  font-size:12px; font-weight:500; color:var(--c-text-muted); padding:6px 14px;
+  border-radius:var(--radius-sm); border:1px solid var(--c-border); background:var(--c-bg-card);
+  transition:all var(--duration-fast) var(--ease-out); font-family:var(--font-sans);
+}
+.global-toggle:hover { color:var(--c-accent); border-color:var(--c-accent-subtle); background:var(--c-accent-glow); }
 
 /* Sidebar */
 .sidebar {
@@ -143,6 +171,9 @@ body {
     <p class="sub">记录日常生活中的灵光一闪</p>
     <div class="line"></div>
   </header>
+  <div class="global-toggle-wrap">
+    <button class="global-toggle" id="globalToggle">收起全部 ▾</button>
+  </div>
   <div id="notes-container"></div>
 </div>
 <nav class="sidebar" id="sidebar" aria-label="笔记导航"></nav>
@@ -509,37 +540,81 @@ AI工具：能用 Claude Code 等高效工作，工具链意识强
   }
 ];
 
+const COLLAPSE_THRESHOLD = 10;
+
 (function() {
   'use strict';
 
   const container = document.getElementById('notes-container');
   const sidebar = document.getElementById('sidebar');
+  const globalToggle = document.getElementById('globalToggle');
   const notes = [];
+  let allCollapsed = false;
 
   // Stats
   const statsEl = document.createElement('div');
   statsEl.className = 'stats';
-  statsEl.innerHTML = '共 <strong>' + NOTES_DATA.length + '</strong> 篇';
+  statsEl.innerHTML = '共 <strong>' + NOTES_DATA.length + '</strong> 篇 · 前' + COLLAPSE_THRESHOLD + '条展开';
   sidebar.appendChild(statsEl);
 
   // Phase 1: create notes
   NOTES_DATA.forEach((entry, i) => {
     const index = i + 1;
     const label = '#' + String(index).padStart(3, '0');
+    const isExpanded = i < COLLAPSE_THRESHOLD;
 
     const article = document.createElement('article');
-    article.className = 'note';
+    article.className = 'note' + (isExpanded ? '' : ' is-collapsed');
     article.id = 'note-' + i;
     article.style.animationDelay = (i * 0.05) + 's';
+
+    const contentHtml = entry.content.replace(/\n/g, '<br>');
+
     article.innerHTML =
       '<div class="note-meta">' +
       '<span class="index">' + label + '</span>' +
       '<span class="date">' + entry.date + '</span>' +
+      '<button class="note-toggle" aria-label="' + (isExpanded ? '收起' : '展开') + '"><span class="icon">' + (isExpanded ? '▼' : '▶') + '</span></button>' +
       '</div>' +
-      '<div class="content">' + entry.content.replace(/\n/g, '<br>') + '</div>';
+      '<div class="content' + (isExpanded ? '' : ' collapsed') + '">' + contentHtml + '</div>';
 
     container.appendChild(article);
     notes.push(article);
+
+    // Individual toggle
+    const toggleBtn = article.querySelector('.note-toggle');
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const wasCollapsed = article.classList.toggle('is-collapsed');
+      article.querySelector('.content').classList.toggle('collapsed', wasCollapsed);
+      toggleBtn.querySelector('.icon').textContent = wasCollapsed ? '▶' : '▼';
+      toggleBtn.setAttribute('aria-label', wasCollapsed ? '展开' : '收起');
+
+      // Sync global toggle
+      const anyCollapsed = notes.some(n => n.classList.contains('is-collapsed'));
+      if (!anyCollapsed && allCollapsed) { allCollapsed = false; globalToggle.textContent = '收起全部 ▾'; }
+      else if (anyCollapsed && !allCollapsed) { allCollapsed = true; globalToggle.textContent = '展开全部 ▸'; }
+    });
+  });
+
+  // Global toggle
+  globalToggle.addEventListener('click', () => {
+    allCollapsed = !allCollapsed;
+    globalToggle.textContent = allCollapsed ? '展开全部 ▸' : '收起全部 ▾';
+
+    notes.forEach((article, i) => {
+      const btn = article.querySelector('.note-toggle');
+      const c = article.querySelector('.content');
+      if (allCollapsed) {
+        article.classList.add('is-collapsed'); c.classList.add('collapsed');
+        btn.querySelector('.icon').textContent = '▶'; btn.setAttribute('aria-label', '展开');
+      } else {
+        const exp = i < COLLAPSE_THRESHOLD;
+        article.classList.toggle('is-collapsed', !exp); c.classList.toggle('collapsed', !exp);
+        btn.querySelector('.icon').textContent = exp ? '▼' : '▶';
+        btn.setAttribute('aria-label', exp ? '收起' : '展开');
+      }
+    });
   });
 
   // Phase 2: group by date, create sidebar links (one per unique date)

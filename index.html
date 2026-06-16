@@ -536,6 +536,26 @@ body {
 .filter-tab[data-filter="decision"].is-active { background: #f5ede4; color: #b8865a; }
 .filter-tab[data-filter="people"].is-active { background: #f3e8e8; color: #b07a7a; }
 
+.tab-count {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:18px;
+  height:16px;
+  padding:0 5px;
+  border-radius:8px;
+  font-size:10px;
+  font-weight:600;
+  font-family:var(--font-mono);
+  line-height:1;
+  background:rgba(128,128,128,0.1);
+  vertical-align:middle;
+  margin-left:2px;
+}
+.filter-tab.is-active .tab-count {
+  background:rgba(255,255,255,0.4);
+}
+
 @media (prefers-color-scheme:dark) {
   .filter-tab[data-filter="decision"].is-active { background: #2d2825; color: #cba07a; }
   .filter-tab[data-filter="people"].is-active { background: #2d2825; color: #c09a9a; }
@@ -586,10 +606,10 @@ body {
 
   <!-- Filter tabs -->
   <div class="filter-tabs">
-    <button class="filter-tab is-active" data-filter="all" type="button">全部</button>
-    <button class="filter-tab" data-filter="decision" type="button">✅ 决策</button>
-    <button class="filter-tab" data-filter="people" type="button">👥 搞定的人</button>
-    <button class="filter-tab" data-filter="daily" type="button">📋 日常笔记</button>
+    <button class="filter-tab is-active" data-filter="all" type="button">全部 <span class="tab-count" id="countAll">0</span></button>
+    <button class="filter-tab" data-filter="decision" type="button">✅ 决策 <span class="tab-count" id="countDecision">0</span></button>
+    <button class="filter-tab" data-filter="people" type="button">👥 搞定的人 <span class="tab-count" id="countPeople">0</span></button>
+    <button class="filter-tab" data-filter="daily" type="button">📋 日常笔记 <span class="tab-count" id="countDaily">0</span></button>
   </div>
 
   <!-- Notes -->
@@ -1928,9 +1948,16 @@ const COLLAPSE_THRESHOLD = 10;
   // Stats
   const statsEl = document.createElement('div');
   statsEl.className = 'stats';
-  var decisionCount = NOTES_DATA.filter(function(e) { return e.type === 'decision' || e.type === 'people'; }).length;
   statsEl.innerHTML = '共 <strong>' + NOTES_DATA.length + '</strong> 篇 · 前' + COLLAPSE_THRESHOLD + '条展开';
   sidebar.appendChild(statsEl);
+
+  // Tab counts
+  var tabCounts = { decision: 0, people: 0, daily: 0 };
+  NOTES_DATA.forEach(function(e) { var t = e.type || 'daily'; tabCounts[t]++; });
+  document.getElementById('countAll').textContent = '(' + NOTES_DATA.length + ')';
+  document.getElementById('countDecision').textContent = '(' + tabCounts.decision + ')';
+  document.getElementById('countPeople').textContent = '(' + tabCounts.people + ')';
+  document.getElementById('countDaily').textContent = '(' + tabCounts.daily + ')';
 
   // Phase 1: create notes
   NOTES_DATA.forEach(function(entry, i) {

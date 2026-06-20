@@ -560,12 +560,124 @@ body {
   .filter-tab[data-filter="decision"].is-active { background: #2d2825; color: #cba07a; }
   .filter-tab[data-filter="people"].is-active { background: #2d2825; color: #c09a9a; }
 }
+
+/* ============================================
+   Auth Overlay — Password Gate
+   ============================================ */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-bg);
+  background-image:
+    radial-gradient(ellipse at 30% 40%, rgba(200,145,106,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 60%, rgba(200,145,106,0.03) 0%, transparent 50%);
+}
+.auth-card {
+  background: var(--c-bg-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  width: 340px;
+  max-width: 88vw;
+  box-shadow: 0 20px 60px var(--c-shadow-hover), 0 2px 8px var(--c-shadow);
+  text-align: center;
+}
+.auth-card h2 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--c-text);
+  margin-bottom: 8px;
+}
+.auth-card .auth-sub {
+  font-size: 0.85rem;
+  color: var(--c-text-muted);
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+.auth-card input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+  background: var(--c-bg);
+  color: var(--c-text);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out);
+  box-sizing: border-box;
+  font-family: var(--font-sans);
+}
+.auth-card input:focus {
+  border-color: var(--c-accent);
+}
+.auth-card input::placeholder {
+  color: var(--c-text-muted);
+}
+.auth-card button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--c-accent);
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+.auth-card button:hover {
+  background: var(--c-accent-hover);
+}
+.auth-card button:active {
+  transform: scale(0.98);
+}
+.auth-error {
+  color: #c0392b;
+  font-size: 0.8rem;
+  margin-top: 14px;
+  min-height: 1.2em;
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+.auth-error.is-show {
+  opacity: 1;
+}
+@keyframes auth-shake {
+  0%,100% { transform: translateX(0); }
+  20%,60% { transform: translateX(-6px); }
+  40%,80% { transform: translateX(6px); }
+}
+.auth-card.is-shake {
+  animation: auth-shake 0.4s var(--ease-out);
+}
 </style>
 <!-- Cloudflare Web Analytics -->
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9b715167a4a14d8d8a743c039368058d"}'></script>
 <!-- End Cloudflare Web Analytics -->
 </head>
 <body>
+<!-- Auth Overlay -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-card" id="authCard">
+    <h2>随想笔记</h2>
+    <p class="auth-sub">需要密码才能访问</p>
+    <input type="password" id="authInput" placeholder="输入密码" autocomplete="off" spellcheck="false" />
+    <button id="authBtn">进入</button>
+    <p class="auth-error" id="authError">密码不对，再想想</p>
+  </div>
+</div>
+<script>(function(){var k='dn_auth';if(localStorage.getItem(k)==='1'){var e=document.getElementById('authOverlay');if(e)e.style.display='none'}})()</script>
 
 <div class="scroll-progress" id="scrollProgress"></div>
 
@@ -620,6 +732,52 @@ body {
 <nav class="sidebar" id="sidebar" aria-label="笔记导航"></nav>
 
 <script>
+
+/* === DOOR — access control === */
+(function(){
+  var _set = [107,98,99,98];
+  var _adj = 7;
+  var _key = 'dn_auth';
+
+  if (localStorage.getItem(_key) === '1') return;
+
+  var _box = document.getElementById('authOverlay');
+  var _cd  = document.getElementById('authCard');
+  var _in  = document.getElementById('authInput');
+  var _btn = document.getElementById('authBtn');
+  var _er  = document.getElementById('authError');
+
+  /* verify sequence alignment */
+  function _match(seq) {
+    if (!seq || seq.length !== _set.length) return false;
+    for (var i = 0; i < _set.length; i++) {
+      if (seq.charCodeAt(i) - _adj !== _set[i]) return false;
+    }
+    return true;
+  }
+
+  function _unlock() {
+    var v = _in.value;
+    if (_match(v)) {
+      localStorage.setItem(_key, '1');
+      _box.style.display = 'none';
+    } else {
+      _er.className = 'auth-error is-show';
+      _cd.className = 'auth-card';
+      void _cd.offsetWidth;
+      _cd.className = 'auth-card is-shake';
+      _in.value = '';
+      _in.focus();
+    }
+  }
+
+  _btn.addEventListener('click', _unlock);
+  _in.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') _unlock();
+  });
+  setTimeout(function(){ _in.focus(); }, 300);
+})();
+
 const NOTES_DATA = [
   {
     date: '2026-06-20',

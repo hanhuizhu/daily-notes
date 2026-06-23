@@ -535,6 +535,7 @@ body {
 .filter-tab[data-filter="all"].is-active { background: var(--c-accent-subtle); color: var(--c-accent); }
 .filter-tab[data-filter="decision"].is-active { background: #f5ede4; color: #b8865a; }
 .filter-tab[data-filter="people"].is-active { background: #f3e8e8; color: #b07a7a; }
+.filter-tab[data-filter="goal"].is-active { background: #e4edf5; color: #4a7a9a; }
 
 .tab-count {
   display:inline-flex;
@@ -559,6 +560,7 @@ body {
 @media (prefers-color-scheme:dark) {
   .filter-tab[data-filter="decision"].is-active { background: #2d2825; color: #cba07a; }
   .filter-tab[data-filter="people"].is-active { background: #2d2825; color: #c09a9a; }
+  .filter-tab[data-filter="goal"].is-active { background: #2a2d30; color: #7aadc9; }
 }
 
 /* ============================================
@@ -718,10 +720,11 @@ body {
 
   <!-- Filter tabs -->
   <div class="filter-tabs">
-    <button class="filter-tab is-active" data-filter="all" type="button">全部 <span class="tab-count" id="countAll">0</span></button>
+    <button class="filter-tab" data-filter="all" type="button">全部 <span class="tab-count" id="countAll">0</span></button>
     <button class="filter-tab" data-filter="decision" type="button">✅ 决策 <span class="tab-count" id="countDecision">0</span></button>
     <button class="filter-tab" data-filter="people" type="button">👥 搞定的人 <span class="tab-count" id="countPeople">0</span></button>
     <button class="filter-tab" data-filter="daily" type="button">📋 日常笔记 <span class="tab-count" id="countDaily">0</span></button>
+    <button class="filter-tab is-active" data-filter="goal" type="button">🎯 目标 <span class="tab-count" id="countGoal">0</span></button>
   </div>
 
   <!-- Notes -->
@@ -779,6 +782,192 @@ body {
 })();
 
 const NOTES_DATA = [
+  // ========== 最新的放最前面 ==========
+  {
+    date: '2026-06-23',
+    type: 'goal',
+    content: `🎯 2026 H2 目标清单
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+目标1：从框架到落地（过河拆桥）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▎现状诊断
+框架笔记占总笔记 >80%，微观决策复盘 <20%。
+框架完善度的边际效益已经趋近于零。
+
+▎量化目标
+□ 每周至少记录1个具体决策复盘（做了/没做、对了/错了、为什么）
+□ 框架类笔记占比从 >80% 降到 <50%
+□ 每次复盘追问：这个决策带来了什么实际结果？
+
+▎截止时间：2026年7月底
+▎检查方式：回头看笔记，数框架类 vs 决策复盘类的比例
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+目标2：建通道——从理论到执行
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▎现状诊断
+"建通道"只有理论框架，没有实际案例。
+链接数量不够，且链接对象集中在已有圈层。
+
+▎量化目标
+□ 每周认识1个认知圈外的人，深度交流（>40min）
+□ 每次交流后24h内记录三要素：
+  ① 我暴露了什么
+  ② 我获得了什么新信息
+  ③ 我做了什么后续动作
+□ 建立链接追踪表，每月回顾一次
+□ 9月底前累计链接10个新人
+
+▎截止时间：2026年9月底
+▎检查方式：追踪表 + 交流记录笔记
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+目标3：打破封闭系统——用真实世界验证想法
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▎现状诊断
+90%的认知产出路径是：自己思考→跟Claude探讨→沉淀笔记。
+这是一个封闭系统，缺乏真实世界的碰撞和反馈。
+
+▎量化目标
+□ 把旅行×历史的想法做成一个最小产品
+  - 选项A：写一篇深度历史线游记，发布到公开平台
+  - 选项B：做一次小范围的深度旅行分享
+  - 选项C：找一个旅游行业的人深聊，记录碰撞结果
+□ 关注真实反馈（阅读量、评论、是否有陌生人共鸣）
+□ 8月底前至少完成其中1项
+
+▎截止时间：2026年8月底
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+目标4：否定式规则→肯定式规则
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▎现状诊断
+笔记里有很多"不要XXX"的规则。它们在保护你，也在画地为牢。
+过渡期需要的是"定义要什么"，不是"拒绝什么"。
+
+▎量化目标
+□ 过一遍所有"不要XXX"的规则，逐条改写成"要XXX"
+□ 重点改写3条核心规则，例如：
+  ① "不要管别人的事" → "筛选值得深入的人，投入深度关系"
+  ② "工作只能占8小时" → "8小时内高效产出，8小时外探索新可能"
+  ③ "不要对外抱有期待" → "管理期待，但保持开放的连接姿态"
+□ 7月中旬完成改写，记入笔记
+
+▎截止时间：2026年7月中
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+目标5：时间分配纪律
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▎原则
+工作（对内&对外）不超过 60%
+学习（历史×地理×英语）固定投入 20%
+建通道（认识新人、验证想法）投入 20%
+
+▎量化目标
+□ 历史/地理/英语每周至少固定投入3小时
+□ 每周至少1次"建通道"时间块（认识新人/发布内容/验证想法）
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+月度检查点
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+7月中 → 检查目标4（规则改写）完成情况
+7月底 → 检查目标1（框架落地）完成情况
+8月底 → 检查目标3（真实世界验证）完成情况
+9月底 → 检查目标2（建通道累计10人）完成情况
+      → 回顾5个目标的整体进展，确定Q4目标
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+最后一句提醒自己
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+不缺认知，不缺框架，不缺方法论。
+缺的是把"想通了的事"变成"做成了的事"那一跃。
+少写框架，多做案例，多认识人。`
+  },
+  // ========== 最新的放最前面 ==========
+  {
+    date: '2026-06-23',
+    type: 'decision',
+    content: `运营的本质理解
+
+运营就是做流量、做内容、做产品、做留存、做复购，最终把 GMV 和净利润做起来。
+
+【运营的组织方式：按品类切分】
+运营应该按照商品品类切分，而不是按职能切分。
+京东的采销团队就是最好的例子——每个采销团队对一个品类的进销存、毛利、流量全链路负责。
+
+品类切分的优势：
+① 权责利对等——一个团队对品类的全链路结果负责，不是只负责某个环节
+② 决策链路短——品类负责人在自己品类内做决策，不需要跨部门拉通
+③ 数据闭环——品类的收入、成本、毛利、用户反馈都在一个团队视野里
+④ 可衡量——每个品类是一个独立的损益单元，做得好不好一目了然
+⑤ 可竞争——内部品类之间可以形成健康的竞争关系，各自找增长点
+
+按职能切分的问题是：运营只负责流量，不管毛利；采购只负责成本，不管用户感受。
+最后结果是每个人都在自己的 KPI 上做对的事，但整体未必对。
+
+【运营的本质是"闭环"】
+不是某一个环节做得好——流量大但留存低、内容好但转化差、复购高但毛利低，都不叫运营做得好。
+是整条链路的效率：流量进来 → 内容承接 → 产品转化 → 留存复购 → 利润跑正。每个环节都不差，整体才是好的。`
+  },
+  // ========== 最新的放最前面 ==========
+  {
+    date: '2026-06-23',
+    type: 'decision',
+    content: `会员运营 vs 存量运营的关系
+
+【范围差异：子集 vs 全集】
+存量运营（全集）— 所有已触达/已购买的用户：沉默用户、流失用户、普通用户、会员用户
+会员运营（子集）— 存量中有"会员身份"的那部分
+
+【目标差异】
+存量运营：提升存量资产利用率、降流失。抓手是触达策略、唤醒手段、挽留机制。
+会员运营：提升会员粘性、ARPU、生命周期。抓手是权益、积分、等级、专属服务。
+
+【会员身份本身驱动复购，不只是复购的结果】
+① 沉没成本驱动 — 注册了、填了资料，不想白费，优先回来
+② 权益差驱动 — 会员价、会员日、积分翻倍，在决策时刻拉回天平
+③ 身份锚定 — "我是这里的会员"在认知层面做优先筛选
+
+【关系：正反馈循环，不是先后关系】
+会员身份 → 复购动力↑ → 积累更多行为数据 → 标签更准 → 触达更精准 → 体验更好 → 更深粘性
+                                                                          ↑
+存量运营（触达/唤醒/挽留）维持基础活跃 ————————— 反哺会员体验
+
+【一个类比】
+存量运营是网——把你拉回来。
+会员运营是锚——让你想回来。
+网没有锚，捞一下人走了。锚没有网，锚钉在那里但没人经过。
+
+核心：刚需靠存量推送，粘性靠会员权益。存量做大漏斗，会员做深漏斗底。`
+  },
+  // ========== 最新的放最前面 ==========
+  {
+    date: '2026-06-23',
+    type: 'daily',
+    content: `看用户评论 & 分析爆款内容，看渠道看内容
+
+【看评论的三个层次】
+① 看用户说了什么 — 真实反馈，找高频关键词
+② 看用户没说什么但暴露了 — 使用场景、使用习惯、竞品对比
+③ 看评论的评论 — 高赞回复里藏着大众的共识和情绪
+
+【分析爆款内容】
+· 什么渠道（小红书/抖音/视频号/公众号）
+· 什么形式（图文/短视频/直播/长文）
+· 什么内容（痛点/情绪/干货/故事）
+· 什么时间发布（工作日/周末，早中晚）
+· 什么数据表现（点赞/收藏/评论比例，看哪个数据突出）
+
+交叉分析一个爆款，找到可复用的模式。不要分析一个结论就完，要拉出"这个渠道 × 这个形式 × 这个内容类型"的组合公式。`
+  },
   // ========== 最新的放最前面 ==========
   {
     date: '2026-06-23',
@@ -2986,12 +3175,13 @@ const COLLAPSE_THRESHOLD = 10;
   sidebar.appendChild(statsEl);
 
   // Tab counts
-  var tabCounts = { decision: 0, people: 0, daily: 0 };
+  var tabCounts = { decision: 0, people: 0, daily: 0, goal: 0 };
   NOTES_DATA.forEach(function(e) { var t = e.type || 'daily'; tabCounts[t]++; });
   document.getElementById('countAll').textContent = '(' + NOTES_DATA.length + ')';
   document.getElementById('countDecision').textContent = '(' + tabCounts.decision + ')';
   document.getElementById('countPeople').textContent = '(' + tabCounts.people + ')';
   document.getElementById('countDaily').textContent = '(' + tabCounts.daily + ')';
+  document.getElementById('countGoal').textContent = '(' + tabCounts.goal + ')';
 
   // Phase 1: create notes
   NOTES_DATA.forEach(function(entry, i) {
@@ -3129,18 +3319,26 @@ const COLLAPSE_THRESHOLD = 10;
   // Filter tabs
   var filterTabs = document.querySelectorAll('.filter-tab');
   var currentFilter = 'all';
+
+  function applyFilter() {
+    notes.forEach(function(a) {
+      var t = a.dataset.type || 'daily';
+      a.style.display = (currentFilter === 'all' || t === currentFilter) ? '' : 'none';
+    });
+  }
+
   filterTabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
       filterTabs.forEach(function(t) { t.classList.remove('is-active'); });
       tab.classList.add('is-active');
       currentFilter = tab.getAttribute('data-filter');
-
-      notes.forEach(function(a) {
-        var t = a.dataset.type || 'daily';
-        a.style.display = (currentFilter === 'all' || t === currentFilter) ? '' : 'none';
-      });
+      applyFilter();
     });
   });
+
+  // 默认命中「目标」筛选
+  currentFilter = 'goal';
+  applyFilter();
 
   // WeChat detection
   if (navigator.userAgent.indexOf('MicroMessenger') !== -1) {

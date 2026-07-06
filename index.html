@@ -453,6 +453,57 @@ body {
 /* ============================================
    Reduced Motion
    ============================================ */
+/* ============================================
+   Promo Banner — Link to Travel Guide
+   ============================================ */
+.promo-banner {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:linear-gradient(135deg,var(--c-accent-subtle),var(--c-bg-card));
+  border:1px solid var(--c-accent-subtle);
+  border-radius:var(--radius-md);
+  padding:12px 18px;
+  margin-bottom:var(--space-lg);
+  text-decoration:none;
+  transition:all var(--duration-fast) var(--ease-out);
+  cursor:pointer;
+}
+.promo-banner:hover {
+  border-color:var(--c-accent);
+  box-shadow:0 2px 8px var(--c-accent-glow);
+  transform:translateY(-1px);
+}
+.promo-banner:active {
+  transform:translateY(0);
+}
+.promo-icon {
+  font-size:1.2rem;
+  line-height:1;
+  flex-shrink:0;
+}
+.promo-text {
+  flex:1;
+  font-size:0.9rem;
+  font-weight:500;
+  color:var(--c-text);
+  letter-spacing:0.01em;
+}
+.promo-arrow {
+  flex-shrink:0;
+  color:var(--c-accent);
+  transition:transform var(--duration-fast) var(--ease-out);
+}
+.promo-banner:hover .promo-arrow {
+  transform:translateX(3px);
+}
+
+@media (prefers-color-scheme:dark) {
+  .promo-banner {
+    background:linear-gradient(135deg,var(--c-accent-subtle),var(--c-bg-card));
+  }
+}
+
 @media (prefers-reduced-motion:reduce) {
   .note { animation:none; opacity:1; transform:none; }
   .note:hover { transform:none; }
@@ -707,6 +758,15 @@ body {
     <p class="sub">记录日常生活中的灵光一闪</p>
     <div class="line"></div>
   </header>
+
+  <!-- Promote travel guide -->
+  <a href="shanghai-travel.html" class="promo-banner">
+    <span class="promo-icon">🗺️</span>
+    <span class="promo-text">上海3日游路线规划（含古镇）</span>
+    <svg class="promo-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m9 18 6-6-6-6"/>
+    </svg>
+  </a>
 
   <!-- Global toggle -->
   <div class="global-toggle-wrap">

@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>上海3日游路线规划 · travel guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   Design System — Design Tokens
+   ============================================ */
+:root {
+  --c-bg: #f5f0eb;
+  --c-bg-card: #fffcf8;
+  --c-text: #2d2a24;
+  --c-text-secondary: #8b8178;
+  --c-text-muted: #b0a79e;
+  --c-accent: #c8916a;
+  --c-accent-hover: #b88055;
+  --c-accent-subtle: #f0e6dc;
+  --c-accent-glow: rgba(200, 145, 106, 0.12);
+  --c-border: #e8e0d8;
+  --c-border-light: #f0ebe5;
+  --c-shadow: rgba(80, 60, 40, 0.06);
+  --c-shadow-hover: rgba(80, 60, 40, 0.12);
+
+  /* Travel-specific tokens */
+  --c-morning: #f5d6a8;
+  --c-afternoon: #dfc5b0;
+  --c-evening: #b8a8c8;
+  --c-tag-green: #e0f0e0;
+  --c-tag-green-text: #3a7a3a;
+  --c-tag-blue: #e0e8f0;
+  --c-tag-blue-text: #3a6a8a;
+  --c-tag-gold: #f5e8c8;
+  --c-tag-gold-text: #8a7a3a;
+  --c-tag-red: #f5e0e0;
+  --c-tag-red-text: #8a4a4a;
+
+  --font-serif: "Noto Serif SC","Source Han Serif SC","STSong",Georgia,serif;
+  --font-sans: -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --font-mono: ui-monospace,"SF Mono","Cascadia Code",monospace;
+  --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px; --space-xl:32px; --space-2xl:48px; --space-3xl:64px;
+  --radius-sm:6px; --radius-md:10px; --radius-lg:16px;
+  --duration-fast:200ms; --duration-normal:400ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+body {
+  font-family:var(--font-sans); background:var(--c-bg); color:var(--c-text); line-height:1.7;
+  background-image:
+    radial-gradient(ellipse at 30% 20%, rgba(200,145,106,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(200,145,106,0.03) 0%, transparent 50%);
+  background-attachment:fixed;
+  min-height:100dvh;
+}
+
+/* ============================================
+   Layout
+   ============================================ */
+.container {
+  max-width:720px;
+  margin:0 auto;
+  padding:var(--space-3xl) var(--space-lg);
+  position:relative;
+}
+
+/* ============================================
+   Header
+   ============================================ */
+.header {
+  margin-bottom:var(--space-2xl);
+  text-align:center;
+}
+.header .label {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  font-weight:600;
+  color:var(--c-accent);
+  background:var(--c-accent-subtle);
+  padding:4px 14px;
+  border-radius:10px;
+  letter-spacing:0.03em;
+  margin-bottom:var(--space-md);
+}
+.header h1 {
+  font-family:var(--font-serif);
+  font-size:clamp(1.8rem,4vw,2.6rem);
+  font-weight:700;
+  letter-spacing:-0.02em;
+  color:var(--c-text);
+  line-height:1.3;
+}
+.header h1 .accent { color:var(--c-accent); }
+.header .sub {
+  font-size:clamp(0.85rem,1.5vw,0.95rem);
+  color:var(--c-text-secondary);
+  margin-top:var(--space-sm);
+  line-height:1.6;
+}
+.header .line {
+  width:72px;
+  height:3px;
+  background:linear-gradient(90deg,var(--c-accent),transparent);
+  border-radius:2px;
+  margin:var(--space-lg) auto 0;
+}
+
+/* ============================================
+   Back link
+   ============================================ */
+.back-link {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:13px;
+  color:var(--c-text-muted);
+  text-decoration:none;
+  margin-bottom:var(--space-lg);
+  transition:color var(--duration-fast) var(--ease-out);
+}
+.back-link:hover { color:var(--c-accent); }
+.back-link svg { transition:transform var(--duration-fast) var(--ease-out); }
+.back-link:hover svg { transform:translateX(-3px); }
+
+/* ============================================
+   Overview Card
+   ============================================ */
+.overview {
+  background:var(--c-bg-card);
+  border:1px solid var(--c-border);
+  border-radius:var(--radius-lg);
+  padding:var(--space-xl);
+  margin-bottom:var(--space-xl);
+  box-shadow:0 1px 2px rgba(80,60,40,0.04),0 20px 40px -15px rgba(80,60,40,0.05);
+}
+.overview h2 {
+  font-family:var(--font-serif);
+  font-size:1.1rem;
+  font-weight:600;
+  color:var(--c-text);
+  margin-bottom:var(--space-md);
+}
+.overview-table {
+  width:100%;
+  border-collapse:collapse;
+}
+.overview-table th,
+.overview-table td {
+  text-align:left;
+  padding:8px 12px;
+  border-bottom:1px solid var(--c-border-light);
+  font-size:0.9rem;
+}
+.overview-table th {
+  font-weight:600;
+  color:var(--c-text-secondary);
+  width:60px;
+}
+.overview-table td:last-child { color:var(--c-accent); font-weight:600; }
+
+/* ============================================
+   Day Card
+   ============================================ */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.day-card {
+  background:var(--c-bg-card);
+  border:1px solid var(--c-border);
+  border-radius:var(--radius-lg);
+  padding:var(--space-xl) var(--space-lg);
+  margin-bottom:var(--space-lg);
+  position:relative;
+  overflow:hidden;
+  box-shadow:
+    0 1px 2px rgba(80,60,40,0.04),
+    0 20px 40px -15px rgba(80,60,40,0.05);
+  animation:fadeUp 0.5s var(--ease-out) both;
+}
+.day-card:nth-child(2) { animation-delay:0.1s; }
+.day-card:nth-child(3) { animation-delay:0.2s; }
+.day-card:nth-child(4) { animation-delay:0.3s; }
+.day-card:nth-child(5) { animation-delay:0.4s; }
+
+.day-card::before {
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:3px;
+  background:linear-gradient(90deg,var(--c-accent),transparent 60%);
+}
+
+.day-number {
+  font-family:var(--font-mono);
+  font-size:11px;
+  font-weight:600;
+  color:var(--c-accent);
+  background:var(--c-accent-subtle);
+  padding:2px 12px;
+  border-radius:10px;
+  display:inline-block;
+  letter-spacing:0.02em;
+  margin-bottom:var(--space-sm);
+}
+
+.day-card h2 {
+  font-family:var(--font-serif);
+  font-size:1.2rem;
+  font-weight:600;
+  color:var(--c-text);
+  margin-bottom:var(--space-md);
+  line-height:1.4;
+}
+
+/* ============================================
+   Timeline
+   ============================================ */
+.timeline {
+  position:relative;
+  padding-left:var(--space-xl);
+}
+.timeline::before {
+  content:'';
+  position:absolute;
+  left:7px;
+  top:4px;
+  bottom:4px;
+  width:2px;
+  background:var(--c-border);
+  border-radius:1px;
+}
+
+.timeline-item {
+  position:relative;
+  padding-bottom:var(--space-lg);
+}
+.timeline-item:last-child { padding-bottom:0; }
+
+.timeline-dot {
+  position:absolute;
+  left:calc(-1 * var(--space-xl) + 3px);
+  top:5px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  border:2px solid var(--c-accent);
+  background:var(--c-bg-card);
+}
+.timeline-item.morning .timeline-dot { border-color:var(--c-morning); background:var(--c-morning); }
+.timeline-item.afternoon .timeline-dot { border-color:var(--c-afternoon); background:var(--c-afternoon); }
+.timeline-item.evening .timeline-dot { border-color:var(--c-evening); background:var(--c-evening); }
+
+.timeline-time {
+  font-size:12px;
+  font-weight:600;
+  color:var(--c-text-muted);
+  margin-bottom:2px;
+  letter-spacing:0.02em;
+}
+.timeline-item.morning .timeline-time { color:#b8860a; }
+.timeline-item.afternoon .timeline-time { color:#8a6a4a; }
+.timeline-item.evening .timeline-time { color:#6a5a8a; }
+
+.timeline-title {
+  font-size:0.95rem;
+  font-weight:600;
+  color:var(--c-text);
+  margin-bottom:4px;
+}
+
+.timeline-desc {
+  font-size:0.85rem;
+  color:var(--c-text-secondary);
+  line-height:1.6;
+}
+
+.timeline-tags {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:6px;
+}
+.tag {
+  font-size:11px;
+  padding:2px 10px;
+  border-radius:8px;
+  font-weight:500;
+  line-height:1.6;
+}
+.tag-green { background:var(--c-tag-green); color:var(--c-tag-green-text); }
+.tag-blue { background:var(--c-tag-blue); color:var(--c-tag-blue-text); }
+.tag-gold { background:var(--c-tag-gold); color:var(--c-tag-gold-text); }
+.tag-red { background:var(--c-tag-red); color:var(--c-tag-red-text); }
+
+/* ============================================
+   Supplementary Cards
+   ============================================ */
+.supplement {
+  margin-bottom:var(--space-lg);
+}
+.supplement h2 {
+  font-family:var(--font-serif);
+  font-size:1.1rem;
+  font-weight:600;
+  color:var(--c-text);
+  margin-bottom:var(--space-md);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.table-wrap {
+  overflow-x:auto;
+}
+.supplement table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:0.85rem;
+  background:var(--c-bg-card);
+  border:1px solid var(--c-border);
+  border-radius:var(--radius-md);
+  overflow:hidden;
+}
+.supplement th,
+.supplement td {
+  padding:10px 14px;
+  text-align:left;
+  border-bottom:1px solid var(--c-border-light);
+}
+.supplement th {
+  background:var(--c-accent-subtle);
+  font-weight:600;
+  color:var(--c-text-secondary);
+  font-size:0.8rem;
+}
+.supplement tr:last-child td { border-bottom:none; }
+
+/* ============================================
+   Ancient Town Section
+   ============================================ */
+.town-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:var(--space-md);
+  margin-bottom:var(--space-lg);
+}
+.town-card {
+  background:var(--c-bg-card);
+  border:1px solid var(--c-border);
+  border-radius:var(--radius-md);
+  padding:var(--space-lg);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+  animation:fadeUp 0.5s var(--ease-out) both;
+}
+.town-card:hover {
+  transform:translateY(-2px);
+  box-shadow:0 4px 16px var(--c-shadow-hover);
+}
+.town-card h3 {
+  font-size:1rem;
+  font-weight:600;
+  margin-bottom:6px;
+}
+.town-card .town-rank {
+  display:inline-block;
+  font-size:10px;
+  font-weight:700;
+  color:#fff;
+  background:var(--c-accent);
+  padding:1px 10px;
+  border-radius:8px;
+  margin-bottom:8px;
+  letter-spacing:0.02em;
+}
+.town-card .town-detail { font-size:0.85rem; color:var(--c-text-secondary); line-height:1.6; }
+.town-card .town-detail strong { color:var(--c-text); }
+.town-card .town-detail .label { display:block; margin-top:6px; color:var(--c-text-muted); font-size:0.8rem; }
+
+/* ============================================
+   Plan Comparison
+   ============================================ */
+.plan-comparison {
+  margin-bottom:var(--space-lg);
+}
+.plan-card {
+  background:var(--c-bg-card);
+  border:1px solid var(--c-border);
+  border-left:3px solid var(--c-accent);
+  border-radius:var(--radius-md);
+  padding:var(--space-lg);
+  margin-bottom:var(--space-md);
+}
+.plan-card h3 {
+  font-size:1rem;
+  font-weight:600;
+  margin-bottom:var(--space-sm);
+}
+.plan-card table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:0.85rem;
+}
+.plan-card th, .plan-card td {
+  padding:6px 8px;
+  text-align:left;
+  border-bottom:1px solid var(--c-border-light);
+}
+.plan-card th {
+  font-weight:600;
+  color:var(--c-text-secondary);
+  width:56px;
+  font-size:0.8rem;
+}
+.plan-card tr:last-child td { border-bottom:none; }
+.plan-card .plan-rec {
+  font-size:0.82rem;
+  color:var(--c-accent);
+  font-weight:600;
+  margin-top:var(--space-sm);
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+/* ============================================
+   Food & Accommodation
+   ============================================ */
+.food-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap:var(--space-md);
+  margin-bottom:var(--space-lg);
+}
+.food-item {
+  background:var(--c-bg-card);
+  border:1px solid var(--c-border);
+  border-radius:var(--radius-md);
+  padding:var(--space-md) var(--space-lg);
+  animation:fadeUp 0.5s var(--ease-out) both;
+}
+.food-item h3 {
+  font-size:0.85rem;
+  font-weight:600;
+  margin-bottom:4px;
+}
+.food-item .food-rec {
+  font-size:0.85rem;
+  color:var(--c-text-secondary);
+  line-height:1.6;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width:600px) {
+  .container { padding:var(--space-xl) var(--space-md); }
+  .town-grid { grid-template-columns:1fr; }
+  .food-grid { grid-template-columns:1fr; }
+}
+
+/* ============================================
+   Dark Mode
+   ============================================ */
+@media (prefers-color-scheme:dark) {
+  :root {
+    --c-bg:#1a1817;
+    --c-bg-card:#242120;
+    --c-text:#e8e0d8;
+    --c-text-secondary:#a09890;
+    --c-text-muted:#706860;
+    --c-accent:#d4a37a;
+    --c-accent-hover:#e0b890;
+    --c-accent-subtle:#2d2825;
+    --c-accent-glow:rgba(212,163,122,0.12);
+    --c-border:#2d2825;
+    --c-border-light:#2a2522;
+    --c-shadow:rgba(0,0,0,0.2);
+    --c-shadow-hover:rgba(0,0,0,0.4);
+    --c-tag-green: #1a2a1a;
+    --c-tag-green-text: #6aaa6a;
+    --c-tag-blue: #1a222a;
+    --c-tag-blue-text: #6a9aba;
+    --c-tag-gold: #2a2218;
+    --c-tag-gold-text: #baaa5a;
+    --c-tag-red: #2a1a1a;
+    --c-tag-red-text: #ba7a7a;
+  }
+  body {
+    background-image:
+      radial-gradient(ellipse at 30% 20%, rgba(212,163,122,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(212,163,122,0.04) 0%, transparent 50%);
+  }
+}
+
+/* ============================================
+   Print
+   ============================================ */
+@media print {
+  .back-link { display:none; }
+  .day-card { break-inside:avoid; }
+  .town-card { break-inside:avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Back link -->
+  <a class="back-link" href="/" onclick="event.preventDefault();history.back()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m15 18-6-6 6-6"/>
+    </svg>
+    返回首页
+  </a>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="label">🗺️ travel guide</div>
+    <h1>上海<span class="accent">3日游</span>路线规划</h1>
+    <p class="sub">不含迪士尼，涵盖经典地标 · 法租界文艺 · 水乡古镇 · 美食推荐</p>
+    <div class="line"></div>
+  </header>
+
+  <!-- Overview -->
+  <div class="overview">
+    <h2>📋 路线总览</h2>
+    <table class="overview-table">
+      <tr><th>Day1</th><td>经典地标</td><td>外滩 → 陆家嘴 → 南京路</td></tr>
+      <tr><th>Day2</th><td>文艺历史</td><td>法租界 → 武康路 → 新天地</td></tr>
+      <tr><th>Day3</th><td>现代体验</td><td>豫园 → 徐汇滨江 → 前滩太古里</td></tr>
+    </table>
+  </div>
+
+  <!-- ============================================
+       Day 1
+       ============================================ -->
+  <div class="day-card">
+    <span class="day-number">DAY 1</span>
+    <h2>🏙️ 经典地标 · 浦西↔浦东</h2>
+
+    <div class="timeline">
+
+      <div class="timeline-item morning">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">☀️ 上午</div>
+        <div class="timeline-title">外滩万国建筑群</div>
+        <div class="timeline-desc">
+          沿中山东一路漫步，看外滩建筑群（和平饭店、海关大楼等）。<br>
+          从外白渡桥开始往南走，拍照视角最佳。
+        </div>
+        <div class="timeline-tags">
+          <span class="tag tag-gold">🍜 早餐推荐：大壶春生煎（四川中路店）</span>
+        </div>
+      </div>
+
+      <div class="timeline-item afternoon">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">🌤️ 中午</div>
+        <div class="timeline-title">陆家嘴三件套</div>
+        <div class="timeline-desc">
+          坐观光隧道或轮渡到浦东。<br>
+          登<strong>上海中心118层观光厅</strong>（或金茂大厦/环球金融中心选一个），看"三件套"全景。
+        </div>
+        <div class="timeline-tags">
+          <span class="tag tag-blue">🍚 午餐：正大广场或国金中心商场</span>
+        </div>
+      </div>
+
+      <div class="timeline-item afternoon">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">🌤️ 下午</div>
+        <div class="timeline-title">浦东滨江 &amp; 浦东美术馆</div>
+        <div class="timeline-desc">
+          陆家嘴滨江步道骑行/散步。<br>
+          逛<strong>浦东美术馆</strong>（MAP，建筑师让·努维尔设计，建筑本身就很值得看）。<br>
+          📸 日落时分在滨江拍浦西天际线。
+        </div>
+      </div>
+
+      <div class="timeline-item evening">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">🌙 晚上</div>
+        <div class="timeline-title">南京路步行街 &amp; 外滩夜景</div>
+        <div class="timeline-desc">
+          南京路步行街溜达，尽头回到<strong>外滩看夜景</strong>（亮灯约19:00）。
+        </div>
+        <div class="timeline-tags">
+          <span class="tag tag-red">🍜 晚餐推荐：绿波廊（豫园）或老正兴</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================
+       Day 2
+       ============================================ -->
+  <div class="day-card">
+    <span class="day-number">DAY 2</span>
+    <h2>🌿 法租界文艺之旅</h2>
+
+    <div class="timeline">
+
+      <div class="timeline-item morning">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">☀️ 上午</div>
+        <div class="timeline-title">武康路 → 安福路</div>
+        <div class="timeline-desc">
+          <strong>武康大楼</strong>打卡（早点去人少）。<br>
+          沿武康路散步：老洋房、梧桐树、买手店。<br>
+          拐到安福路：多抓鱼循环商店、多抓鱼书店、各类咖啡馆。
+        </div>
+        <div class="timeline-tags">
+          <span class="tag tag-gold">🥐 早餐：武康路附近的 Alimentari 或 Sunflour</span>
+        </div>
+      </div>
+
+      <div class="timeline-item afternoon">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">🌤️ 中午</div>
+        <div class="timeline-title">巨鹿路 &amp; 永平里</div>
+        <div class="timeline-desc">
+          巨鹿路、富民路、长乐路"巨富长"区域。<br>
+          永平里 &amp; 现所创意园区。
+        </div>
+        <div class="timeline-tags">
+          <span class="tag tag-blue">🍚 午餐：fond deli（简餐）或老吉士（本帮菜）</span>
+        </div>
+      </div>
+
+      <div class="timeline-item afternoon">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">🌤️ 下午</div>
+        <div class="timeline-title">思南路 → 复兴中路 → 新天地</div>
+        <div class="timeline-desc">
+          <strong>思南公馆</strong>（老洋房街区）。<br>
+          复兴中路：上海文化广场附近老建筑。<br>
+          <strong>复兴公园</strong>散步。<br>
+          沿南昌路走到<strong>新天地</strong>。
+        </div>
+      </div>
+
+      <div class="timeline-item evening">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">🌙 晚上</div>
+        <div class="timeline-title">新天地</div>
+        <div class="timeline-desc">
+          石库门建筑群改造的商业街区。<br>
+          晚餐选一家本帮菜（如新吉士）。<br>
+          旁边中共一大会址夜景也不错。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================
+       Day 3
+       ============================================ -->
+  <div class="day-card">
+    <span class="day-number">DAY 3</span>
+    <h2>🌆 城市新体验</h2>
+
+    <div class="timeline">
+
+      <div class="timeline-item morning">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">☀️ 上午</div>
+        <div class="timeline-title">豫园 &amp; 城隍庙</div>
+        <div class="timeline-desc">
+          <strong>豫园</strong>（明代园林，门票约40元）。<br>
+          城隍庙逛逛（不进庙也可以逛外面九曲桥）。<br>
+          ⚠️ 周末人很多，建议一开门就去。
+        </div>
+        <div class="timeline-tags">
+          <span class="tag tag-gold">🥟 小吃：南翔馒头店（蟹粉小笼）</span>
+        </div>
+      </div>
+
+      <div class="timeline-item afternoon">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">🌤️ 下午</div>
+        <div class="timeline-title">西岸（徐汇滨江）</div>
+        <div class="timeline-desc">
+          <strong>龙美术馆</strong>（西岸馆）、余德耀美术馆。<br>
+          西岸滨江步道，沿江咖啡店坐坐。<br>
+          油罐艺术中心拍照。
+        </div>
+        <div class="timeline-tags">
+          <span class="tag tag-blue">🍚 晚餐：西岸附近（绿地缤纷城/正大乐城）</span>
+        </div>
+      </div>
+
+      <div class="timeline-item evening">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">🌙 晚上</div>
+        <div class="timeline-title">前滩太古里</div>
+        <div class="timeline-desc">
+          开放式商业街区，晚上逛氛围好。<br>
+          或回<strong>外滩/陆家嘴补看夜景</strong>。<br>
+          推荐：外滩M1-17观景平台（免费，视角绝佳）。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================
+       古镇推荐
+       ============================================ -->
+  <div class="supplement">
+    <h2>🏘️ 古镇推荐</h2>
+    <p style="font-size:0.9rem;color:var(--c-text-secondary);margin-bottom:var(--space-md);">
+      上海周边有多个值得去的江南水乡古镇，可以替代Day2或Day3的行程。
+    </p>
+
+    <div class="town-grid">
+
+      <div class="town-card">
+        <span class="town-rank">⭐ 首选</span>
+        <h3>朱家角古镇</h3>
+        <div class="town-detail">
+          <strong>距市区：</strong>约40-50公里<br>
+          <strong>交通：</strong>地铁17号线直达「朱家角站」→ 换乘公交/打车5分钟<br>
+          <strong>特色：</strong>上海本地古镇，小桥流水，放生桥、课植园<br>
+          <strong>建议：</strong>半天足够，下午去待到晚上看夜景<br>
+          <span class="label">🎫 古镇免费，部分景点收费</span>
+        </div>
+      </div>
+
+      <div class="town-card">
+        <span class="town-rank" style="background:var(--c-tag-blue-text)">最近</span>
+        <h3>七宝古镇</h3>
+        <div class="town-detail">
+          <strong>距市区：</strong>约20公里<br>
+          <strong>交通：</strong>地铁9号线「七宝站」步行10分钟<br>
+          <strong>特色：</strong>缩小版古镇，主要是<strong>美食街</strong><br>
+          <strong>必吃：</strong>七宝方糕、羊肉汤、海棠糕、臭豆腐<br>
+          <strong>建议：</strong>2-3小时，适合Day1上午或Day3晚上<br>
+          <span class="label">ℹ️ 地方很小，不值得专程花一整天</span>
+        </div>
+      </div>
+
+      <div class="town-card">
+        <h3>南浔古镇（浙江）</h3>
+        <div class="town-detail">
+          <strong>距市区：</strong>约100公里<br>
+          <strong>交通：</strong>高铁到湖州站 / 长途大巴<br>
+          <strong>特色：</strong>比朱家角大很多，中西合璧建筑（张石铭故居、小莲庄）<br>
+          <strong>建议：</strong>需一整天<br>
+          <span class="label">🎫 门票约95元 · 较远，需安排整日</span>
+        </div>
+      </div>
+
+      <div class="town-card">
+        <h3>周庄（江苏）</h3>
+        <div class="town-detail">
+          <strong>距市区：</strong>约80公里<br>
+          <strong>交通：</strong>高铁到苏州→转公交，或直达大巴<br>
+          <strong>特色：</strong>陈逸飞画中的双桥，水乡代表<br>
+          <strong>建议：</strong>需一整天<br>
+          <span class="label">🎫 门票约100元 · 商业化程度高，游客多</span>
+        </div>
+      </div>
+
+      <div class="town-card">
+        <h3>西塘（浙江）</h3>
+        <div class="town-detail">
+          <strong>距市区：</strong>约90公里<br>
+          <strong>交通：</strong>高铁到嘉善南站<br>
+          <strong>特色：</strong>烟雨长廊，夜生活丰富（酒吧多）<br>
+          <strong>建议：</strong>需一整天<br>
+          <span class="label">🎫 门票约95元</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================
+       含古镇的方案
+       ============================================ -->
+  <div class="plan-comparison">
+    <h2 style="font-family:var(--font-serif);font-size:1.1rem;font-weight:600;margin-bottom:var(--space-md);">💡 含古镇的行程方案</h2>
+
+    <div class="plan-card">
+      <h3>方案A：朱家角半日版 <span style="font-size:0.8rem;color:var(--c-accent);font-weight:600;">（推荐，最省心）</span></h3>
+      <table>
+        <tr><th>Day1</th><td>外滩 → 陆家嘴 → 南京路夜景</td></tr>
+        <tr><th>Day2</th><td>法租界（武康路/安福路）→ <strong>下午2点出发去朱家角</strong> → 古镇夜景+晚餐</td></tr>
+        <tr><th>Day3</th><td>豫园/城隍庙 → 徐汇滨江 → 前滩太古里</td></tr>
+      </table>
+      <div class="plan-rec">✅ 朱家角地铁直达，不用换城市，半天逛完还有夜景看，最不折腾</div>
+    </div>
+
+    <div class="plan-card">
+      <h3>方案B：南浔/周庄全天版 <span style="font-size:0.8rem;color:var(--c-text-muted);font-weight:400;">（适合深度游）</span></h3>
+      <table>
+        <tr><th>Day1</th><td>外滩 → 陆家嘴 → 南京路</td></tr>
+        <tr><th>Day2</th><td>整天<strong>南浔或周庄</strong>（当天往返）</td></tr>
+        <tr><th>Day3</th><td>法租界（精简版）+ 豫园 + 新天地</td></tr>
+      </table>
+    </div>
+
+    <div class="plan-card">
+      <h3>方案C：轻松混搭版 <span style="font-size:0.8rem;color:var(--c-text-muted);font-weight:400;">（市区古镇混搭）</span></h3>
+      <table>
+        <tr><th>Day1</th><td>上午<strong>七宝古镇</strong>吃小吃 → 下午外滩/陆家嘴</td></tr>
+        <tr><th>Day2</th><td>法租界文艺路线</td></tr>
+        <tr><th>Day3</th><td>豫园 → 徐汇滨江 → 新天地</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============================================
+       住宿建议
+       ============================================ -->
+  <div class="supplement">
+    <h2>🏨 住宿建议</h2>
+    <table>
+      <thead>
+        <tr><th>预算</th><th>推荐区域</th><th>推荐酒店</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>奢侈</td><td>外滩 / 陆家嘴</td><td>和平饭店、华尔道夫</td></tr>
+        <tr><td>中等</td><td>新天地 / 淮海路</td><td>法租界核心区酒店</td></tr>
+        <tr><td>经济</td><td>静安寺 / 陕西南路</td><td>交通方便，性价比高</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============================================
+       交通贴士
+       ============================================ -->
+  <div class="supplement">
+    <h2>🚇 交通贴士</h2>
+    <table>
+      <tbody>
+        <tr><td>🚇 地铁</td><td>覆盖绝大部分景点，建议买3日地铁票（约45元）</td></tr>
+        <tr><td>📱 乘车码</td><td>支付宝/微信乘车码直接刷闸机</td></tr>
+        <tr><td>🚕 打车</td><td>滴滴/高德，避开早晚高峰</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============================================
+       美食推荐
+       ============================================ -->
+  <div class="supplement">
+    <h2>🍜 必吃清单</h2>
+    <div class="food-grid">
+      <div class="food-item">
+        <h3>🥟 本帮菜</h3>
+        <div class="food-rec">老吉士、新吉士、上海老饭店</div>
+      </div>
+      <div class="food-item">
+        <h3>🥟 生煎</h3>
+        <div class="food-rec">大壶春、小杨生煎</div>
+      </div>
+      <div class="food-item">
+        <h3>🥟 小笼</h3>
+        <div class="food-rec">南翔馒头店、莱莱小笼</div>
+      </div>
+      <div class="food-item">
+        <h3>🍜 面馆</h3>
+        <div class="food-rec">老地方面馆、沪上一家辣肉面</div>
+      </div>
+      <div class="food-item">
+        <h3>☕ 咖啡</h3>
+        <div class="food-rec">武康路/安福路随便选一家都行</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="margin-top:var(--space-2xl);padding-top:var(--space-lg);border-top:1px solid var(--c-border-light);text-align:center;color:var(--c-text-muted);font-size:0.8rem;">
+    <p>🗺️ 上海3日游路线规划 · 生成于 2026-07-06</p>
+    <p style="margin-top:4px;">不含迪士尼 · 经典+文艺+古镇全覆盖</p>
+  </div>
+
+</div>
+
+</body>
+</html>

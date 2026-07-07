@@ -1,0 +1,7 @@
+# DeepCode runtime data — do not commit
+sessions/
+telemetry/
+cache/
+exports/
+audit.log
+ui-state.json

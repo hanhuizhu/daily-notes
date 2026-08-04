@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# pre-commit 钩子：origin.html 变更时自动压缩生成 index.html，并暂存
+# 使用方式：git config core.hooksPath .githooks （一次性，见 CLAUDE.md）
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+
+# 没有源文件（尚未初始化）则跳过
+[ -f origin.html ] || exit 0
+
+# 检测 origin.html 是否有改动（暂存或未暂存）
+ORIGIN_CHANGED=false
+git diff --quiet origin.html || ORIGIN_CHANGED=true
+git diff --cached --quiet origin.html || ORIGIN_CHANGED=true
+
+# 没有 node 时：仅当 origin.html 有改动才中止（无法同步 index.html），否则放行
+if ! command -v node >/dev/null 2>&1; then
+  if [ "$ORIGIN_CHANGED" = true ]; then
+    echo "⚠️  [pre-commit] origin.html 有改动但未安装 node，无法生成 index.html，提交中止。" >&2
+    echo "    请先安装 Node.js 后重试，或手动运行：node scripts/compress.js" >&2
+    exit 1
+  fi
+  exit 0
+fi
+
+# 重新压缩：保证 index.html 始终与 origin.html 同步
+BEFORE="$(git hash-object index.html 2>/dev/null || echo missing)"
+node scripts/compress.js
+AFTER="$(git hash-object index.html 2>/dev/null || echo missing)"
+
+# 无条件暂存 index.html（新文件首次提交、或压缩后内容变化都覆盖；无变化时是空操作）
+git add index.html
+if [ "$BEFORE" != "$AFTER" ]; then
+  echo "✅  [pre-commit] 已从 origin.html 重新压缩并暂存 index.html"
+fi

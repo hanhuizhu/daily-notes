@@ -15,6 +15,7 @@ Codex 会读取本文件。本仓库是一个单页 HTML 随想笔记，`origin.
 - 每条笔记包含 `date`、`type`、`content` 三个字段。
 - `type` 取值参考现有数据：`goal`、`decision`、`people`、`daily`。
 - `content` 使用模板字符串，保留原文换行。
+- 每条笔记的 `content` 建议按「目标 → 量化结果 → 放大动作」结构化记录：目标写业务结果，量化结果写可观测指标，放大动作写可复制、可扩展路径。
 - 修改内容时只改 `origin.html`，不要手动修改 `index.html`。
 
 ## 压缩与发布流程

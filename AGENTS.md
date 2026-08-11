@@ -24,6 +24,7 @@ Codex 会读取本文件。本仓库是一个单页 HTML 随想笔记，`origin.
 2. 运行 `node scripts/compress.js` 重新生成 `index.html`。
 3. 检查 `origin.html` 的 `NOTES_DATA` 能正常解析、没有 JS 语法错误。
 4. 提交并推送；GitHub Pages 从 `main` 分支自动发布。
+5. 新增内容后自动推送上线：执行 `node scripts/compress.js`，再 `git add AGENTS.md origin.html index.html`、`git commit`、`git push origin main`。
 
 如果新环境没有配置钩子，先执行：
 

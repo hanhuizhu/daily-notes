@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="748" viewBox="0 0 1080 748">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#faf7f2"/><stop offset=".58" stop-color="#f3eee6"/><stop offset="1" stop-color="#ece5da"/></linearGradient>
+<radialGradient id="halo" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="rgba(169,113,58,.12)"/><stop offset="1" stop-color="rgba(169,113,58,.12)" stop-opacity="0"/></radialGradient>
+<linearGradient id="rail1" gradientUnits="userSpaceOnUse" x1="336" y1="0" x2="972" y2="0"><stop offset="0" stop-color="#a9713a" stop-opacity=".95"/><stop offset=".8" stop-color="#a9713a" stop-opacity=".8"/><stop offset="1" stop-color="#a9713a" stop-opacity=".45"/></linearGradient>
+<radialGradient id="orb" cx=".34" cy=".28" r=".85"><stop offset="0" stop-color="#8d5c2c"/><stop offset="1" stop-color="#a9713a"/></radialGradient>
+<filter id="soft" x="-60%%" y="-60%%" width="220%%" height="220%%"><feGaussianBlur stdDeviation="7"/></filter>
+<filter id="grain" x="0" y="0" width="100%%" height="100%%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+<marker id="tip" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L8 5 L0 9 Z" fill="#a9713a" fill-opacity=".55"/></marker>
+<marker id="tip2" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L8 5 L0 9 Z" fill="#a9713a" fill-opacity=".38"/></marker>
+</defs>
+<style>text{font-family:"PingFang SC","Hiragino Sans GB",system-ui,sans-serif;-webkit-font-smoothing:antialiased}.st{font-size:20px;fill:#4d463f;letter-spacing:.045em}.lane{font-size:21px;font-weight:600;letter-spacing:.09em;fill:#a9713a}.lg{font-size:21px;fill:#4d463f;letter-spacing:.03em}.lgk{font-size:21px;font-weight:600;fill:#a9713a;letter-spacing:.05em}.ft{font-size:17px;fill:#9a8f83;letter-spacing:.16em}.orb{font-size:23px;font-weight:600;fill:#fdfaf6;letter-spacing:.14em}</style>
+<rect width="1080" height="748" fill="url(#bg)"/>
+<rect width="1080" height="748" filter="url(#grain)" opacity=".022"/>
+<ellipse cx="150" cy="326" rx="300" ry="270" fill="url(#halo)"/>
+<circle cx="150" cy="326" r="60" fill="#a9713a" filter="url(#soft)" opacity=".34"/>
+<circle cx="150" cy="326" r="49" fill="url(#orb)"/>
+<text class="orb" x="150" y="334" text-anchor="middle">人群</text>
+<path d="M199 326 C266 326 272 196 336 196" fill="none" stroke="#a9713a" stroke-width="2.2" stroke-opacity=".9" stroke-linecap="round"/>
+<path d="M199 326 C266 326 272 456 336 456" fill="none" stroke="#a9713a" stroke-width="1.8" stroke-opacity=".42" stroke-dasharray="7 7" stroke-linecap="round"/>
+<path d="M336 196 H972" fill="none" stroke="url(#rail1)" stroke-width="2.2" marker-end="url(#tip)"/>
+<path d="M336 456 H972" fill="none" stroke="#a9713a" stroke-width="1.8" stroke-opacity=".42" stroke-dasharray="7 7" marker-end="url(#tip2)"/>
+<text class="lane" x="340" y="170">存量人群</text>
+<text class="lane" x="340" y="494">新人群</text>
+<circle cx="480" cy="196" r="8.5" fill="#fbf8f4" stroke="rgba(38,34,30,.30)" stroke-width="1.8"/>
+<text class="st" x="480" y="170" text-anchor="middle">进来</text>
+<circle cx="572" cy="196" r="26" fill="rgba(169,113,58,.12)"/>
+<circle cx="572" cy="196" r="16.5" fill="#fbf8f4" stroke="#a9713a" stroke-width="2.4"/>
+<circle cx="572" cy="196" r="6.5" fill="#a9713a"/>
+<text class="st" x="572" y="170" text-anchor="middle">逛</text>
+<circle cx="664" cy="196" r="26" fill="rgba(169,113,58,.12)"/>
+<circle cx="664" cy="196" r="16.5" fill="#fbf8f4" stroke="#a9713a" stroke-width="2.4"/>
+<circle cx="664" cy="196" r="6.5" fill="#a9713a"/>
+<text class="st" x="664" y="170" text-anchor="middle">选</text>
+<circle cx="756" cy="196" r="26" fill="rgba(169,113,58,.12)"/>
+<circle cx="756" cy="196" r="16.5" fill="#fbf8f4" stroke="#a9713a" stroke-width="2.4"/>
+<circle cx="756" cy="196" r="6.5" fill="#a9713a"/>
+<text class="st" x="756" y="170" text-anchor="middle">下单</text>
+<circle cx="848" cy="196" r="8.5" fill="#fbf8f4" stroke="rgba(38,34,30,.30)" stroke-width="1.8"/>
+<text class="st" x="848" y="170" text-anchor="middle">履约</text>
+<circle cx="940" cy="196" r="8.5" fill="#fbf8f4" stroke="rgba(38,34,30,.30)" stroke-width="1.8"/>
+<text class="st" x="940" y="170" text-anchor="middle">复购</text>
+<circle cx="480" cy="456" r="8.5" fill="#fbf8f4" stroke="#a9713a" stroke-width="1.8" stroke-opacity=".55"/>
+<text class="st" x="480" y="494" text-anchor="middle">进来</text>
+<circle cx="572" cy="456" r="8.5" fill="#fbf8f4" stroke="#a9713a" stroke-width="1.8" stroke-opacity=".55"/>
+<text class="st" x="572" y="494" text-anchor="middle">逛</text>
+<circle cx="664" cy="456" r="8.5" fill="#fbf8f4" stroke="#a9713a" stroke-width="1.8" stroke-opacity=".55"/>
+<text class="st" x="664" y="494" text-anchor="middle">选</text>
+<circle cx="756" cy="456" r="8.5" fill="#fbf8f4" stroke="#a9713a" stroke-width="1.8" stroke-opacity=".55"/>
+<text class="st" x="756" y="494" text-anchor="middle">下单</text>
+<circle cx="848" cy="456" r="8.5" fill="#fbf8f4" stroke="#a9713a" stroke-width="1.8" stroke-opacity=".55"/>
+<text class="st" x="848" y="494" text-anchor="middle">履约</text>
+<circle cx="940" cy="456" r="8.5" fill="#fbf8f4" stroke="#a9713a" stroke-width="1.8" stroke-opacity=".55"/>
+<text class="st" x="940" y="494" text-anchor="middle">复购</text>
+<path d="M90 536 H990" stroke="rgba(38,34,30,.10)" stroke-width="1"/>
+<path d="M92 592 H146" stroke="#a9713a" stroke-width="2.2" stroke-opacity=".9"/>
+<circle cx="119" cy="592" r="10" fill="#fbf8f4" stroke="#a9713a" stroke-width="2.2"/>
+<circle cx="119" cy="592" r="4" fill="#a9713a"/>
+<text class="lgk" x="168" y="599">节点优化</text>
+<text class="lg" x="272" y="599">同一条链路，逐个节点做差异化 · 收益确定，天花板固定</text>
+<path d="M92 642 H146" stroke="#a9713a" stroke-width="1.8" stroke-opacity=".42" stroke-dasharray="7 7"/>
+<circle cx="119" cy="642" r="8.5" fill="#fbf8f4" stroke="#a9713a" stroke-width="1.8" stroke-opacity=".55"/>
+<text class="lgk" x="168" y="649">人群裂变</text>
+<text class="lg" x="272" y="649">切出新人群，配一条独立链路 · 更重，但抬天花板</text>
+<text class="ft" x="90" y="706">交易运营 / 人群策略</text>
+<text class="ft" x="990" y="706" text-anchor="end">随想笔记 · #001</text>
+</svg>

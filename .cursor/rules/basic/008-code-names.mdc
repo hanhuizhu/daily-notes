@@ -1,0 +1,71 @@
+---
+description: 代码/文件统一命名规范
+alwaysApply: true
+---
+
+# 代码/文件统一命名规范【强制执行】
+
+## 核心原则【不可违反】
+1. **语义化优先**：命名必须清晰表达用途和功能
+2. **英文命名**：禁止拼音、中文或无意义字符
+3. **一致性**：同类型命名保持统一风格
+
+## 文件和目录命名【强制执行】
+
+### 目录命名
+- **camelCase**：`orderManage`、`userCenter`、`components`
+
+### Vue文件命名
+- **PascalCase**：`OrderManage.vue`、`UserProfile.vue`
+
+### JS/TS文件命名
+- **工具函数**：camelCase，如 `dateFormatter.ts`
+- **类文件**：PascalCase，如 `UserService.ts`
+- **类型文件**：camelCase + `.types.ts`，如 `user.types.ts`
+
+## 变量命名【强制执行】
+
+### 普通变量
+- **camelCase**：`userName`、`orderList`
+- **布尔变量**：使用 `is/has/can/should` 前缀，如 `isVisible`、`hasPermission`
+- **数组变量**：复数或 `List` 后缀，如 `users`、`orderList`
+
+### 常量命名
+- **SCREAMING_SNAKE_CASE**：`API_BASE_URL`、`MAX_RETRY_COUNT`
+
+## 函数命名【强制执行】
+
+### 普通函数
+- **camelCase + 动词开头**：`getUserList()`、`updateOrderStatus()`、`validateEmail()`
+
+### 事件处理函数
+- **handle + 具体事件名**：`handleFormSubmit()`、`handleInputChange()`
+
+## Vue组件命名【强制执行】
+
+### 组件名称
+- **PascalCase + 多单词**：组件name属性必须与文件名一致
+- 示例：文件 `UserProfile.vue` 对应 `name: 'UserProfile'`
+
+### 组件Props
+- **camelCase**：`userName`、`itemList`
+- **布尔Props**：使用 `is/has/can/should` 前缀，如 `isVisible`
+
+## CSS类名命名【强制执行】
+
+### BEM命名法
+- **格式**：`block__element--modifier`
+- **Block**：小写 + 短横线，如 `.user-card`
+- **Element**：双下划线连接，如 `.user-card__avatar`
+- **Modifier**：双短横线连接，如 `.user-card--featured`
+
+### 语义化命名
+- **功能导向**：体现元素功能而非样式
+- **禁止**：颜色、尺寸等样式词汇，如 `.red-text`、`.big-button`
+- **推荐**：`.error-message`、`.submit-button`、`.is-active`
+
+## TypeScript类型命名【强制执行】
+
+### 接口和类型别名
+- **PascalCase**：`User`、`UserProfile`、`UserId`
+- **联合类型**：`UserStatus = 'active' | 'inactive'`

@@ -1,0 +1,54 @@
+---
+description: Vue文件开发规范
+globs: ["**/*.vue"]
+alwaysApply: true
+---
+# Vue文件开发规范
+
+## 基础规范【强制执行】
+- **组件结构顺序**：template → script → style
+- **组件命名**：PascalCase（大写开头驼峰），与文件名一致
+- **TypeScript强制**：script标签必须添加`lang="ts"`属性
+- **setup语法糖**：必须使用`<script setup lang="ts">`，不再需要显式name属性
+- **路径别名**：@代表src目录
+- **代码长度限制**：单文件不超过300行，超出需拆分组件
+- **模板逻辑限制**：template避免复杂逻辑判断和计算，应使用computed处理
+
+## Vue版本开发规范
+
+### 统一标准【Vue2.7和Vue3】
+- **语法要求**：统一使用`<script setup lang="ts">`语法糖
+- **响应式API**：使用ref、reactive、computed等组合式API
+- **组件通信**：使用defineProps、defineEmits定义
+- **生命周期**：使用onMounted、onBeforeUnmount等钩子函数
+- **导入方式**：`import { ref, reactive, computed } from 'vue'`
+
+### 版本差异
+- **v-model绑定**：Vue2.7使用`v-model="value"`，Vue3使用`v-model:modelValue`
+
+## 新旧文件处理规范
+
+### 新文件开发【硬性要求】
+- **强制setup语法糖**：所有新Vue文件必须使用`<script setup lang="ts">`
+- **严禁选项式API**：禁止使用export default { }和defineComponent写法
+- **适用范围**：Vue2.7和Vue3项目统一要求
+
+### 存量文件维护【逐步迁移】
+- **优先迁移**：已有选项式API文件优先迁移到setup语法糖
+- **风格保持**：暂时无法迁移时保持原有风格，但不允许新增选项式代码
+- **版本识别**：检查package.json中vue版本，确保支持Vue2.7+或Vue3
+- **禁止混用**：严禁在同一项目混用不同版本语法特性
+- **组件调用**：注意v-model绑定方式的版本差异
+
+## 关联规范【必须遵循】
+- **TypeScript规范**：详见 [006-ts-rules.mdc](mdc:.cursor/rules/basic/006-ts-rules.mdc)
+- **CSS样式规范**：详见 [007-css-rules.mdc](mdc:.cursor/rules/basic/007-css-rules.mdc)
+
+## 用户交互规范【强制执行】
+
+### 按钮节流处理【必须实现】
+- **适用范围**：所有可操作按钮（提交、保存、删除等）必须节流处理
+- **节流时间**：默认300ms，高频操作200ms，重要操作500ms
+- **实现方式**：
+  - 方式一：使用loading状态控制按钮可点击性，异步操作期间禁用并显示加载状态
+  - 方式二：使用throttle节流函数包装点击事件（如lodash的throttle）

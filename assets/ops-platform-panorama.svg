@@ -1,0 +1,195 @@
+<svg viewBox="0 0 920 700" xmlns="http://www.w3.org/2000/svg" style="font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #F8FAFC;">
+  <defs>
+    <linearGradient id="hd" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <filter id="ds"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.08"/></filter>
+    <filter id="dl"><feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.06"/></filter>
+  </defs>
+
+  <rect width="920" height="700" rx="16" fill="#F8FAFC"/>
+
+  <!-- Header -->
+  <rect x="24" y="16" width="872" height="68" rx="14" fill="url(#hd)" filter="url(#ds)"/>
+  <text x="460" y="46" text-anchor="middle" fill="#fff" font-size="22" font-weight="700" letter-spacing="2">运 营 平 台 全 景</text>
+  <text x="460" y="66" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="11">Operation Platform Panorama</text>
+
+  <!-- 1. 流量配置 -->
+  <g transform="translate(24,102)">
+    <rect width="424" height="150" rx="12" fill="#fff" filter="url(#ds)" stroke="#E2E8F0" stroke-width="1"/>
+    <rect width="424" height="42" rx="12" fill="#EEF2FF"/><rect y="22" width="424" height="20" fill="#EEF2FF"/>
+    <circle cx="24" cy="21" r="10" fill="#6366F1"/><text x="24" y="25" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+    <text x="44" y="26" fill="#4338CA" font-size="15" font-weight="700">流量配置</text>
+    <text x="128" y="26" fill="#6366F1" font-size="10" opacity=".65">Traffic</text>
+
+    <g transform="translate(20,56)">
+      <rect width="118" height="74" rx="10" fill="#fff" stroke="#C7D2FE" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="118" height="32" rx="10" fill="#EEF2FF"/><rect y="16" width="118" height="16" fill="#EEF2FF"/>
+      <text x="59" y="22" text-anchor="middle" fill="#4338CA" font-size="14" font-weight="700">广告</text>
+      <text x="59" y="54" text-anchor="middle" fill="#64748B" font-size="10">广告投放与管理</text>
+    </g>
+    <g transform="translate(152,56)">
+      <rect width="118" height="74" rx="10" fill="#fff" stroke="#C7D2FE" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="118" height="32" rx="10" fill="#EEF2FF"/><rect y="16" width="118" height="16" fill="#EEF2FF"/>
+      <text x="59" y="22" text-anchor="middle" fill="#4338CA" font-size="14" font-weight="700">推送</text>
+      <text x="59" y="54" text-anchor="middle" fill="#64748B" font-size="10">消息触达</text>
+    </g>
+    <g transform="translate(284,56)">
+      <rect width="118" height="74" rx="10" fill="#fff" stroke="#C7D2FE" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="118" height="32" rx="10" fill="#EEF2FF"/><rect y="16" width="118" height="16" fill="#EEF2FF"/>
+      <text x="59" y="22" text-anchor="middle" fill="#4338CA" font-size="14" font-weight="700">企微</text>
+      <text x="59" y="54" text-anchor="middle" fill="#64748B" font-size="10">私域运营</text>
+    </g>
+  </g>
+
+  <!-- 4. 基础配置 -->
+  <g transform="translate(472,102)">
+    <rect width="424" height="150" rx="12" fill="#fff" filter="url(#ds)" stroke="#E2E8F0" stroke-width="1"/>
+    <rect width="424" height="42" rx="12" fill="#F0F9FF"/><rect y="22" width="424" height="20" fill="#F0F9FF"/>
+    <circle cx="24" cy="21" r="10" fill="#0284C7"/><text x="24" y="25" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">4</text>
+    <text x="44" y="26" fill="#0369A1" font-size="15" font-weight="700">基础配置</text>
+    <text x="128" y="26" fill="#0284C7" font-size="10" opacity=".65">Foundation</text>
+
+    <g transform="translate(20,56)">
+      <rect width="118" height="74" rx="10" fill="#fff" stroke="#BAE6FD" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="118" height="32" rx="10" fill="#F0F9FF"/><rect y="16" width="118" height="16" fill="#F0F9FF"/>
+      <text x="59" y="22" text-anchor="middle" fill="#0369A1" font-size="14" font-weight="700">商品库</text>
+      <text x="59" y="54" text-anchor="middle" fill="#64748B" font-size="10">商品数据底座</text>
+    </g>
+    <g transform="translate(152,56)">
+      <rect width="118" height="74" rx="10" fill="#fff" stroke="#BAE6FD" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="118" height="32" rx="10" fill="#F0F9FF"/><rect y="16" width="118" height="16" fill="#F0F9FF"/>
+      <text x="59" y="22" text-anchor="middle" fill="#0369A1" font-size="14" font-weight="700">车型库</text>
+      <text x="59" y="54" text-anchor="middle" fill="#64748B" font-size="10">车型基础数据</text>
+    </g>
+    <g transform="translate(284,56)">
+      <rect width="118" height="74" rx="10" fill="#fff" stroke="#BAE6FD" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="118" height="32" rx="10" fill="#F0F9FF"/><rect y="16" width="118" height="16" fill="#F0F9FF"/>
+      <text x="59" y="22" text-anchor="middle" fill="#0369A1" font-size="14" font-weight="700">适配库</text>
+      <text x="59" y="54" text-anchor="middle" fill="#64748B" font-size="10">车型商品匹配</text>
+    </g>
+  </g>
+
+  <!-- 2. 核心交易链路配置 -->
+  <g transform="translate(24,272)">
+    <rect width="872" height="150" rx="12" fill="#fff" filter="url(#ds)" stroke="#E2E8F0" stroke-width="1"/>
+    <rect width="872" height="42" rx="12" fill="#ECFDF5"/><rect y="22" width="872" height="20" fill="#ECFDF5"/>
+    <circle cx="24" cy="21" r="10" fill="#059669"/><text x="24" y="25" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+    <text x="44" y="26" fill="#047857" font-size="15" font-weight="700">核心交易链路配置</text>
+    <text x="200" y="26" fill="#059669" font-size="10" opacity=".65">Core Transaction Chain</text>
+
+    <g transform="translate(16,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#A7F3D0" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#ECFDF5"/><rect y="16" width="110" height="16" fill="#ECFDF5"/>
+      <text x="55" y="22" text-anchor="middle" fill="#047857" font-size="14" font-weight="700">CMS</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">内容管理</text>
+    </g>
+    <g transform="translate(138,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#A7F3D0" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#ECFDF5"/><rect y="16" width="110" height="16" fill="#ECFDF5"/>
+      <text x="55" y="22" text-anchor="middle" fill="#047857" font-size="14" font-weight="700">鲁班</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">页面搭建</text>
+    </g>
+    <g transform="translate(260,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#A7F3D0" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#ECFDF5"/><rect y="16" width="110" height="16" fill="#ECFDF5"/>
+      <text x="55" y="22" text-anchor="middle" fill="#047857" font-size="13" font-weight="700">轮胎配置</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">轮胎业务后台</text>
+    </g>
+    <g transform="translate(382,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#A7F3D0" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#ECFDF5"/><rect y="16" width="110" height="16" fill="#ECFDF5"/>
+      <text x="55" y="22" text-anchor="middle" fill="#047857" font-size="14" font-weight="700">保养</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">保养业务配置</text>
+    </g>
+    <g transform="translate(504,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#A7F3D0" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#ECFDF5"/><rect y="16" width="110" height="16" fill="#ECFDF5"/>
+      <text x="55" y="22" text-anchor="middle" fill="#047857" font-size="14" font-weight="700">车品</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">车品业务配置</text>
+    </g>
+    <g transform="translate(626,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#A7F3D0" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#ECFDF5"/><rect y="16" width="110" height="16" fill="#ECFDF5"/>
+      <text x="55" y="22" text-anchor="middle" fill="#047857" font-size="14" font-weight="700">蓄电池</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">蓄电池业务配置</text>
+    </g>
+    <g transform="translate(748,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#A7F3D0" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#ECFDF5"/><rect y="16" width="110" height="16" fill="#ECFDF5"/>
+      <text x="55" y="22" text-anchor="middle" fill="#047857" font-size="14" font-weight="700">洗美</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">洗美业务配置</text>
+    </g>
+  </g>
+
+  <!-- 3. 价格活动配置 -->
+  <g transform="translate(24,442)">
+    <rect width="872" height="150" rx="12" fill="#fff" filter="url(#ds)" stroke="#E2E8F0" stroke-width="1"/>
+    <rect width="872" height="42" rx="12" fill="#FFF7ED"/><rect y="22" width="872" height="20" fill="#FFF7ED"/>
+    <circle cx="24" cy="21" r="10" fill="#EA580C"/><text x="24" y="25" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+    <text x="44" y="26" fill="#C2410C" font-size="15" font-weight="700">价格活动配置</text>
+    <text x="160" y="26" fill="#EA580C" font-size="10" opacity=".65">Pricing &amp; Campaign</text>
+
+    <g transform="translate(16,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#FED7AA" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#FFF7ED"/><rect y="16" width="110" height="16" fill="#FFF7ED"/>
+      <text x="55" y="22" text-anchor="middle" fill="#C2410C" font-size="14" font-weight="700">选品</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">商品筛选</text>
+    </g>
+    <g transform="translate(138,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#FED7AA" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#FFF7ED"/><rect y="16" width="110" height="16" fill="#FFF7ED"/>
+      <text x="55" y="22" text-anchor="middle" fill="#C2410C" font-size="14" font-weight="700">青鸟</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">规则引擎</text>
+    </g>
+    <g transform="translate(260,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#FED7AA" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#FFF7ED"/><rect y="16" width="110" height="16" fill="#FFF7ED"/>
+      <text x="55" y="22" text-anchor="middle" fill="#C2410C" font-size="14" font-weight="700">玩法</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">活动玩法配置</text>
+    </g>
+    <g transform="translate(382,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#FED7AA" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#FFF7ED"/><rect y="16" width="110" height="16" fill="#FFF7ED"/>
+      <text x="55" y="22" text-anchor="middle" fill="#C2410C" font-size="14" font-weight="700">积分</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">积分体系</text>
+    </g>
+    <g transform="translate(504,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#FED7AA" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#FFF7ED"/><rect y="16" width="110" height="16" fill="#FFF7ED"/>
+      <text x="55" y="22" text-anchor="middle" fill="#C2410C" font-size="14" font-weight="700">优惠券</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">券管理</text>
+    </g>
+    <g transform="translate(626,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#FED7AA" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#FFF7ED"/><rect y="16" width="110" height="16" fill="#FFF7ED"/>
+      <text x="55" y="22" text-anchor="middle" fill="#C2410C" font-size="14" font-weight="700">鹰眼</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">价格监控</text>
+    </g>
+    <g transform="translate(748,56)">
+      <rect width="110" height="74" rx="10" fill="#fff" stroke="#FED7AA" stroke-width="1.5" filter="url(#dl)"/>
+      <rect width="110" height="32" rx="10" fill="#FFF7ED"/><rect y="16" width="110" height="16" fill="#FFF7ED"/>
+      <text x="55" y="22" text-anchor="middle" fill="#C2410C" font-size="14" font-weight="700">麒麟</text>
+      <text x="55" y="54" text-anchor="middle" fill="#64748B" font-size="10">活动平台</text>
+    </g>
+  </g>
+
+  <!-- Bottom Value Chain -->
+  <g transform="translate(24,612)">
+    <rect width="872" height="52" rx="10" fill="#fff" filter="url(#dl)" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="68" y="32" text-anchor="middle" fill="#0284C7" font-size="12" font-weight="600">基础支撑</text>
+    <line x1="120" y1="26" x2="160" y2="26" stroke="#CBD5E1" stroke-width="1.5"/><polygon points="157,22 165,26 157,30" fill="#CBD5E1"/>
+    <text x="210" y="32" text-anchor="middle" fill="#6366F1" font-size="12" font-weight="600">流量引入</text>
+    <line x1="260" y1="26" x2="300" y2="26" stroke="#CBD5E1" stroke-width="1.5"/><polygon points="297,22 305,26 297,30" fill="#CBD5E1"/>
+    <text x="360" y="32" text-anchor="middle" fill="#059669" font-size="12" font-weight="600">交易承接</text>
+    <line x1="420" y1="26" x2="460" y2="26" stroke="#CBD5E1" stroke-width="1.5"/><polygon points="457,22 465,26 457,30" fill="#CBD5E1"/>
+    <text x="520" y="32" text-anchor="middle" fill="#EA580C" font-size="12" font-weight="600">价格驱动</text>
+    <line x1="580" y1="26" x2="620" y2="26" stroke="#CBD5E1" stroke-width="1.5"/><polygon points="617,22 625,26 617,30" fill="#CBD5E1"/>
+    <rect x="640" y="8" width="210" height="36" rx="8" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1"/>
+    <text x="745" y="24" text-anchor="middle" fill="#5B21B6" font-size="13" font-weight="700">用户转化 &amp; 交易达成</text>
+    <text x="745" y="39" text-anchor="middle" fill="#7C3AED" font-size="9">Conversion &amp; Transaction</text>
+  </g>
+
+  <text x="510" y="96" text-anchor="end" fill="#94A3B8" font-size="10">4 大板块 · 20 个系统 · 覆盖用户全链路</text>
+</svg>

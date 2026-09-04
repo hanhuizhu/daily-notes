@@ -1,0 +1,110 @@
+---
+description: Vue Hooks/Composables 开发规范
+alwaysApply: false
+---
+# Vue Hooks/Composables 开发规范【强制执行】
+
+## 适用版本【重要】
+- **适用**：Vue 2.7+ 和 Vue 3.x（支持Composition API）
+- **不适用**：Vue 2.6及以下（使用mixins或公共函数）
+
+## 触发条件【识别标志】
+涉及以下场景时必须触发本规范：
+- 创建hooks/composables/组合式函数
+- 封装/抽取公共逻辑
+- use开头的函数（useTable、useForm、useApi等）
+- setup函数、响应式数据管理
+
+**前置检查：确认项目使用Vue 2.7+或Vue 3.x**
+
+## 核心规范【必须遵循】
+
+### 1. 命名规范【强制】
+- **函数命名**：必须以 `use` 开头，驼峰命名法（如：`useTable`、`useFormValidation`）
+- **文件命名**：`use` 前缀 + 功能描述（如：`useTable.ts`、`useApiRequest.ts`）
+- **禁止**：大写开头（`UseTable`）、下划线分隔（`use_table`）、缺少use前缀（`tableHook`）
+
+### 2. 目录结构【强制】
+```
+src/composables/
+├── business/          # 业务hooks
+├── common/            # 通用hooks
+└── index.ts           # 统一导出
+
+pages/[模块]/composables/  # 页面私有hooks（可选）
+```
+
+### 3. 设计原则【必须遵循】
+- **单一职责**：每个hook只负责一个明确的功能领域
+- **可组合性**：hooks可以相互组合使用，构建复杂逻辑
+- **可复用性**：通过参数配置支持不同场景
+
+## 代码组织规范【强制】
+
+### 标准结构【固定顺序】
+```typescript
+export function useHookName(options: HookOptions = {}) {
+  // 1. 响应式数据定义
+  const loading = ref(false)
+  const data = ref<DataType[]>([])
+
+  // 2. 计算属性
+  const isEmpty = computed(() => data.value.length === 0)
+
+  // 3. 方法定义
+  const fetchData = async () => { /* 实现逻辑 */ }
+
+  // 4. 生命周期（可选）
+  onMounted(() => { /* 初始化逻辑 */ })
+
+  // 5. 返回值（只读状态用readonly包装）
+  return { loading: readonly(loading), data: readonly(data), fetchData }
+}
+
+// 6. 类型定义（文件末尾）
+interface HookOptions { /* 配置项 */ }
+```
+
+### 常见模式【必须遵循】
+
+#### API请求Hook
+- **状态**：`loading`、`data`、`error`
+- **方法**：`execute`（执行请求）
+- **特点**：支持泛型、错误处理、loading状态管理
+
+#### 表格管理Hook
+- **状态**：`tableData`、`loading`、`total`、`currentPage`、`pageSize`
+- **方法**：`fetchData`、`handlePageChange`、`handleSizeChange`、`refresh`
+- **特点**：分页逻辑、数据加载、状态重置
+
+## TypeScript支持【强制】
+
+### 1. 类型定义【必须完整】
+- 为hook的参数定义 `Options` 接口
+- 为hook的返回值定义 `Return` 接口
+- 使用泛型支持不同数据类型
+- 示例：`UseTableOptions<T>`、`UseTableReturn<T>`
+
+### 2. 泛型使用【合理使用】
+```typescript
+export function useApiRequest<TData, TParams = any>(
+  apiFunction: (params: TParams) => Promise<TData>
+): UseApiRequestReturn<TData> {
+  // 实现逻辑
+}
+```
+
+## 统一导出【强制】
+
+### composables/index.ts
+```typescript
+// 通用hooks
+export { useTable } from './common/useTable'
+export { useForm } from './common/useForm'
+
+// 业务hooks
+export { useOrderManage } from './business/useOrderManage'
+
+// 类型导出
+export type { UseTableOptions, UseTableReturn } from './common/useTable'
+```

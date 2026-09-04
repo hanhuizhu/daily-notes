@@ -1,0 +1,63 @@
+---
+description: CSS样式编写规范
+globs: ["**/*.vue", "**/*.css", "**/*.scss", "**/*.sass", "**/*.less", "**/*.stylus"]
+alwaysApply: true
+---
+
+# CSS样式编写规范【必须严格执行】
+
+## 1. 命名规范【硬性要求】
+- 严格遵循 [008-code-names.mdc](mdc:.cursor/rules/basic/008-code-names.mdc) 文件中定义的CSS类名命名规范
+- 使用BEM命名法或语义化命名
+- 类名使用小写字母,多个单词用短横线分隔
+
+## 2. 嵌套规范【强制限制】
+
+### 2.1 嵌套层级控制
+- 最多不超过4层嵌套
+- 优先使用扁平化的类名结构,避免深层嵌套
+- 通过独立类名替代深层嵌套
+
+### 2.2 嵌套优化建议
+- 推荐使用扁平化类名: `.article-list`、`.article-item`、`.article-title`
+- 避免多层嵌套: `.article-list .item .title`
+
+## 3. 作用域规范【必须执行】
+
+### 3.1 Vue组件样式隔离
+- Vue组件必须使用scoped属性进行样式隔离
+- 在style标签上添加scoped: `<style scoped lang="less">`
+- 避免全局样式污染
+
+### 3.2 深度选择器使用
+- 需要修改子组件样式时使用深度选择器
+- Vue 3.x使用`:deep()`语法
+- Vue 2.x使用`::v-deep`语法
+- 禁止删除scoped改用全局样式
+
+## 4. 代码组织规范【必须遵循】
+
+### 4.1 属性顺序
+按以下顺序组织CSS属性:
+1. **定位相关**: position、top、right、bottom、left、z-index
+2. **盒模型**: display、width、height、margin、padding、border
+3. **视觉效果**: background、color、font-size、line-height
+4. **其他**: cursor、transition、animation等
+
+### 4.2 选择器规范
+- **避免过于具体的选择器**: 选择器层级不超过3层
+- **避免使用ID选择器**: 优先使用类选择器
+- **避免使用标签选择器**: 除非必要,优先使用类选择器
+- **合理使用后代选择器**: 保持选择器简洁
+
+## 5. 性能优化规范【必须注意】
+
+### 5.1 选择器性能
+- 避免复杂选择器和属性选择器
+- 避免使用通配符选择器*
+- 减少选择器层级,提高渲染性能
+
+### 5.2 代码复用
+- 提取公共样式为公共类
+- 使用预处理器的变量和混合(mixin)
+- 避免重复定义相同的样式规则

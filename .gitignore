@@ -1,0 +1,3 @@
+
+# 请勿将 .cursor/llms 文件夹上传到 gitlab，本地没有 llms 文件，请执行 cursor-toolkit llms sync
+.cursor/llms

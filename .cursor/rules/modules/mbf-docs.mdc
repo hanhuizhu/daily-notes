@@ -1,0 +1,14 @@
+---
+description: MBF 框架文档
+alwaysApply: false
+---
+# MBF 框架文档
+
+API 生成配置: [docs-useage-config-api.md](mdc:.cursor/llms/mbf-docs/docs-useage-config-api.md)
+运行时配置: [docs-useage-config-runtime.md](mdc:.cursor/llms/mbf-docs/docs-useage-config-runtime.md)
+网络请求: [docs-useage-feat-request.md](mdc:.cursor/llms/mbf-docs/docs-useage-feat-request.md)
+约定式路由: [docs-useage-feat-route.md](mdc:.cursor/llms/mbf-docs/docs-useage-feat-route.md)
+
+## 使用方法
+
+在生成代码前，需要查看 MBF 框架引用的文档，学习 MBF 的使用。

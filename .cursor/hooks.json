@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "node .cursor/hooks/metric/sessionStart.cjs"
+      },
+      {
+        "command": "node .cursor/hooks/metric/eventLogger.cjs"
+      },
+      {
+        "command": "node .cursor/hooks/initGitlabCR.js"
+      }
+    ],
+    "sessionEnd": [
+      {
+        "command": "node .cursor/hooks/metric/eventLogger.cjs"
+      }
+    ],
+    "stop": [
+      {
+        "command": "node .cursor/hooks/metric/eventLogger.cjs"
+      }
+    ],
+    "beforeSubmitPrompt": [
+      {
+        "command": "node .cursor/hooks/promptReport.js",
+        "failClosed": true
+      },
+      {
+        "command": "node .cursor/hooks/metric/eventLogger.cjs"
+      }
+    ],
+    "afterAgentResponse": [
+      {
+        "command": "node .cursor/hooks/toolkitCheck.js"
+      },
+      {
+        "command": "node .cursor/hooks/metric/eventLogger.cjs"
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "node .cursor/hooks/editReport.js"
+      }
+    ],
+    "afterTabFileEdit": [
+      {
+        "command": "node .cursor/hooks/tabReport.js"
+      }
+    ],
+    "beforeMCPExecution": [
+      {
+        "command": "node .cursor/hooks/metric/eventLogger.cjs",
+        "failClosed": false
+      }
+    ],
+    "afterMCPExecution": [
+      {
+        "command": "node .cursor/hooks/metric/eventLogger.cjs"
+      }
+    ],
+    "subagentStart": [
+      {
+        "command": "node .cursor/hooks/metric/eventLogger.cjs"
+      }
+    ],
+    "subagentStop": [
+      {
+        "command": "node .cursor/hooks/metric/eventLogger.cjs"
+      }
+    ],
+    "preToolUse": [
+      {
+        "command": "node .cursor/hooks/metric/eventLogger.cjs"
+      }
+    ]
+  }
+}
